@@ -107,6 +107,22 @@
   }
   .icon-btn:hover { background: rgba(255,255,255,0.28); }
 
+  /* Language toggle button - distinct look */
+  .lang-btn {
+    font-size: 12px;
+    font-weight: 800;
+    letter-spacing: 0.5px;
+    border: 1.5px solid rgba(255,255,255,0.4);
+    background: rgba(255,255,255,0.22);
+  }
+  .lang-btn.active-urdu {
+    background: #16a34a;
+    border-color: #4ade80;
+    box-shadow: 0 0 12px rgba(74, 222, 128, 0.7);
+  }
+  .lang-btn.active-urdu:hover { background: #15803d; }
+  .lang-btn #langLabel { font-family: 'Inter', system-ui, sans-serif; }
+
   /* Welcome banner */
   .welcome {
     padding: 14px 20px;
@@ -463,6 +479,7 @@
       <p><span class="status-dot"></span> <span id="statusText">Online - AI Voice Assistant</span></p>
     </div>
     <div class="header-actions">
+      <button class="icon-btn lang-btn" id="langToggle" title="Switch input language (English / Urdu)" aria-label="Switch language"><span id="langLabel">EN</span></button>
       <button class="icon-btn" id="voiceToggle" title="Toggle voice replies" aria-label="Toggle voice">🔊</button>
       <button class="icon-btn pwa-only" id="installBtn" title="Install app" style="display:none">📲</button>
     </div>
@@ -470,7 +487,7 @@
 
   <div class="welcome">
     <span>👋</span>
-    <span>Assalam-o-Alaikum! I am your AI assistant. Ask me about our AI course, fees, schedule, or tap "Enroll Now".</span>
+    <span>Assalam-o-Alaikum! I am your AI assistant (Urdu + English). Tap <b>EN</b> button (top right) to switch to <b>UR</b> for Urdu voice. Ask about course, fees, schedule, or tap "Enroll Now".</span>
   </div>
 
   <div class="chat" id="chat">
@@ -767,8 +784,9 @@ const GREETING_RESPONSE = {
 let voiceRepliesOn = true;
 let isListening = false;
 let recognition = null;
-let preferredLang = 'en-US'; // default English, switch to Urdu if user speaks Urdu
-let conversationLang = 'en'; // 'en' or 'ur'
+let currentInputLang = 'en-US';   // 'en-US' or 'ur-PK' — controls mic recognition language
+let conversationLang = 'en';     // 'en' or 'ur' — controls response language
+let urduVoicesLoaded = false;
 
 /* ---------------- DOM ELEMENTS ---------------- */
 const chatEl = document.getElementById('chat');
@@ -797,6 +815,11 @@ function init() {
   // Setup event listeners
   setupEventListeners();
 
+  // Show language hint after a moment
+  setTimeout(() => {
+    addBotMessage('<i>💡 <b>Urdu Voice Tip:</b> Tap the <b>EN</b> button (top right) to switch to <b>UR</b> — then tap the mic and speak in Urdu. The agent will reply in Urdu with voice.</i>', false);
+  }, 2500);
+
   // Register service worker for PWA
   if ('serviceWorker' in navigator && window.self === window.top) {
     navigator.serviceWorker.register('sw.js').catch(() => {});
@@ -817,6 +840,7 @@ function setupSpeechRecognition() {
   recognition.continuous = false;
   recognition.interimResults = false;
   recognition.maxAlternatives = 1;
+  recognition.lang = currentInputLang; // initial language
 
   recognition.onstart = () => {
     isListening = true;
@@ -876,13 +900,43 @@ function speak(text, lang) {
   window.speechSynthesis.cancel();
   const utter = new SpeechSynthesisUtterance(cleanText);
   utter.lang = (lang === 'ur') ? 'ur-PK' : 'en-US';
-  utter.rate = 0.95;
+  utter.rate = 0.92;       // slightly slower for clarity in Urdu
   utter.pitch = 1.0;
-  
-  // Try to find matching voice
-  const voices = window.speechSynthesis.getVoices();
-  const matchingVoice = voices.find(v => v.lang.startsWith(lang === 'ur' ? 'ur' : 'en'));
-  if (matchingVoice) utter.voice = matchingVoice;
+  utter.volume = 1.0;
+
+  // Find best matching voice with smart fallbacks
+  const voices = window.speechSynthesis.getVoices() || [];
+  let chosenVoice = null;
+
+  if (lang === 'ur') {
+    // Priority list for Urdu: native Urdu > Urdu variants > Hindi (similar phonetics) > Arabic
+    chosenVoice =
+      voices.find(v => v.lang === 'ur-PK') ||
+      voices.find(v => v.lang === 'ur-IN') ||
+      voices.find(v => v.lang === 'ur') ||
+      voices.find(v => v.lang && v.lang.toLowerCase().startsWith('ur')) ||
+      voices.find(v => v.lang === 'hi-IN') ||  // Hindi shares phonetics with Urdu
+      voices.find(v => v.lang && v.lang.toLowerCase().startsWith('hi')) ||
+      voices.find(v => v.lang === 'ar-SA') ||  // Arabic fallback for some sounds
+      voices.find(v => v.lang && v.lang.toLowerCase().startsWith('ar')) ||
+      voices.find(v => v.lang === 'fa-IR') ||  // Persian fallback
+      voices.find(v => v.lang && v.lang.toLowerCase().startsWith('fa'));
+  } else {
+    chosenVoice =
+      voices.find(v => v.lang === 'en-US') ||
+      voices.find(v => v.lang === 'en-GB') ||
+      voices.find(v => v.lang && v.lang.toLowerCase().startsWith('en'));
+  }
+
+  if (chosenVoice) {
+    utter.voice = chosenVoice;
+    console.log('Using voice:', chosenVoice.name, chosenVoice.lang);
+  }
+
+  // If Urdu requested but no Urdu/Hindi/Arabic voice available, warn user once
+  if (lang === 'ur' && !chosenVoice) {
+    addBotMessage('<i>⚠️ No Urdu voice installed on this device. Showing Urdu text only. See setup guide Section 4 to install Urdu voice.</i>', false);
+  }
 
   window.speechSynthesis.speak(utter);
 }
@@ -900,6 +954,7 @@ function setupEventListeners() {
 
   micBtn.addEventListener('click', toggleListening);
   voiceToggle.addEventListener('click', toggleVoiceReplies);
+  document.getElementById('langToggle').addEventListener('click', toggleLanguage);
 
   // Quick action buttons
   document.querySelectorAll('.qa-btn').forEach(btn => {
@@ -951,12 +1006,44 @@ function toggleListening() {
   } else {
     window.speechSynthesis.cancel(); // stop any ongoing speech
     try {
-      recognition.lang = preferredLang;
+      recognition.lang = currentInputLang; // use the selected input language
       recognition.start();
     } catch (err) {
       console.warn(err);
+      addBotMessage('Could not start microphone. Please tap the mic again and speak clearly. 🎤');
     }
   }
+}
+
+/* ---------------- LANGUAGE TOGGLE (English <-> Urdu) ---------------- */
+function toggleLanguage() {
+  const wasEN = (currentInputLang === 'en-US');
+  currentInputLang = wasEN ? 'ur-PK' : 'en-US';
+  conversationLang = wasEN ? 'ur' : 'en';
+
+  const langLabel = document.getElementById('langLabel');
+  const langToggle = document.getElementById('langToggle');
+  langLabel.textContent = wasEN ? 'UR' : 'EN';
+  langToggle.title = `Input language: ${wasEN ? 'Urdu (اردو)' : 'English'}`;
+  langToggle.classList.toggle('active-urdu', wasEN);
+
+  // Restart recognition with new language if currently listening
+  if (isListening && recognition) {
+    try { recognition.stop(); } catch(e) {}
+    setTimeout(() => {
+      try {
+        recognition.lang = currentInputLang;
+        recognition.start();
+      } catch(e) {}
+    }, 350);
+  }
+
+  // Confirmation in chat (and spoken)
+  const confirmMsg = wasEN
+    ? '✅ <b>اردو زبان منتخب ہوگئی ہے۔</b><br>اب مائیک 🎤 پر کلک کریں اور اردو میں بولیں۔<br><br><i>For best Urdu voice, install Urdu TTS voice in your device settings (see setup guide).</i>'
+    : '✅ <b>Input language switched to English.</b><br>Tap the mic 🎤 and speak in English. The agent will reply in English with voice.';
+  addBotMessage(confirmMsg, true);
+  speak(confirmMsg.replace(/<[^>]*>/g, ' '), wasEN ? 'ur' : 'en');
 }
 
 function toggleVoiceReplies() {
