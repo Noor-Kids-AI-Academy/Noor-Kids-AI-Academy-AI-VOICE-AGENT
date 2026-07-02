@@ -1,7 +1,7 @@
 // Noor Kids AI Academy - Service Worker
 // Caches app shell for offline use and fast loading
 
-const CACHE_NAME = 'noor-ai-v1';
+const CACHE_NAME ='noor-ai-v2-urdu';
 const ASSETS = [
   './',
   './index.html',
