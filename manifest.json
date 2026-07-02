@@ -1,0 +1,48 @@
+{
+  "name": "Noor Kids AI Academy - Voice Assistant",
+  "short_name": "Noor AI",
+  "description": "AI Voice Assistant for Noor Kids AI Academy - course info, enrollment, fees, and WhatsApp support",
+  "start_url": "./index.html",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#f8fafc",
+  "theme_color": "#1e40af",
+  "lang": "en",
+  "dir": "ltr",
+  "categories": ["education", "business", "productivity"],
+  "icons": [
+    {
+      "src": "icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ],
+  "screenshots": [],
+  "shortcuts": [
+    {
+      "name": "Enroll Now",
+      "short_name": "Enroll",
+      "url": "./index.html?action=enroll",
+      "description": "Open enrollment form"
+    },
+    {
+      "name": "Pay Fees",
+      "short_name": "Pay",
+      "url": "./index.html?action=pay",
+      "description": "View Easypaisa payment instructions"
+    },
+    {
+      "name": "WhatsApp Us",
+      "short_name": "WhatsApp",
+      "url": "./index.html?action=whatsapp",
+      "description": "Open WhatsApp chat"
+    }
+  ]
+}

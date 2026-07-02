@@ -1,0 +1,1188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+<meta name="theme-color" content="#1e40af">
+<meta name="description" content="Noor Kids AI Academy - AI Voice Assistant for course information, enrollment, and fees">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="Noor AI Assistant">
+<link rel="manifest" href="manifest.json">
+<title>Noor Kids AI Academy - Voice Assistant</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --primary: #1e40af;
+    --primary-dark: #1e3a8a;
+    --accent: #7c3aed;
+    --accent-light: #a78bfa;
+    --bg: #f8fafc;
+    --surface: #ffffff;
+    --text: #0f172a;
+    --text-muted: #64748b;
+    --border: #e2e8f0;
+    --success: #16a34a;
+    --warning: #ea580c;
+    --shadow: 0 4px 24px rgba(15, 23, 42, 0.08);
+    --shadow-lg: 0 12px 40px rgba(15, 23, 42, 0.15);
+    --radius: 14px;
+    --radius-sm: 8px;
+  }
+  html, body {
+    height: 100%;
+    font-family: 'Segoe UI', 'Inter', system-ui, -apple-system, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    -webkit-font-smoothing: antialiased;
+  }
+  body {
+    background: linear-gradient(135deg, #eff6ff 0%, #f5f3ff 100%);
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+  .app {
+    max-width: 720px;
+    margin: 0 auto;
+    width: 100%;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    background: var(--surface);
+    box-shadow: var(--shadow-lg);
+  }
+
+  /* Header */
+  header {
+    background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+    color: white;
+    padding: 18px 20px;
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    box-shadow: 0 4px 16px rgba(30, 64, 175, 0.25);
+  }
+  .logo {
+    width: 48px; height: 48px;
+    background: rgba(255,255,255,0.18);
+    border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 24px; font-weight: 800;
+    flex-shrink: 0;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255,255,255,0.25);
+  }
+  .header-text h1 {
+    font-size: 18px; font-weight: 700; line-height: 1.2;
+  }
+  .header-text p {
+    font-size: 12px; opacity: 0.9; margin-top: 2px;
+    display: flex; align-items: center; gap: 6px;
+  }
+  .status-dot {
+    width: 8px; height: 8px; border-radius: 50%;
+    background: #4ade80; box-shadow: 0 0 8px #4ade80;
+    animation: pulse 2s infinite;
+  }
+  @keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
+  }
+  .header-actions {
+    margin-left: auto;
+    display: flex; gap: 8px;
+  }
+  .icon-btn {
+    background: rgba(255,255,255,0.15);
+    border: 1px solid rgba(255,255,255,0.2);
+    color: white;
+    width: 36px; height: 36px;
+    border-radius: 10px;
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 16px;
+    transition: background 0.2s;
+  }
+  .icon-btn:hover { background: rgba(255,255,255,0.28); }
+
+  /* Welcome banner */
+  .welcome {
+    padding: 14px 20px;
+    background: linear-gradient(90deg, #fef3c7 0%, #fde68a 100%);
+    border-bottom: 1px solid #fcd34d;
+    font-size: 13px;
+    color: #78350f;
+    display: flex; align-items: center; gap: 8px;
+  }
+
+  /* Chat area */
+  .chat {
+    flex: 1;
+    overflow-y: auto;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    scroll-behavior: smooth;
+  }
+  .msg {
+    max-width: 85%;
+    padding: 12px 16px;
+    border-radius: var(--radius);
+    font-size: 14px;
+    line-height: 1.55;
+    animation: msgIn 0.3s ease-out;
+  }
+  @keyframes msgIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  .msg.bot {
+    background: #f1f5f9;
+    color: var(--text);
+    border-bottom-left-radius: 4px;
+    align-self: flex-start;
+    border-left: 3px solid var(--accent);
+  }
+  .msg.user {
+    background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+    color: white;
+    border-bottom-right-radius: 4px;
+    align-self: flex-end;
+  }
+  .msg.bot b { color: var(--primary); }
+  .msg.bot ul { margin: 8px 0 0 18px; }
+  .msg.bot li { margin: 4px 0; }
+  .msg.bot .action-row {
+    margin-top: 10px;
+    display: flex; flex-wrap: wrap; gap: 6px;
+  }
+  .inline-btn {
+    background: white;
+    border: 1px solid var(--border);
+    color: var(--primary);
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    cursor: pointer;
+    font-weight: 600;
+    text-decoration: none;
+    display: inline-flex; align-items: center; gap: 4px;
+    transition: all 0.15s;
+  }
+  .inline-btn:hover { background: var(--primary); color: white; border-color: var(--primary); }
+  .inline-btn.green { color: var(--success); border-color: #bbf7d0; }
+  .inline-btn.green:hover { background: var(--success); color: white; border-color: var(--success); }
+  .inline-btn.orange { color: var(--warning); border-color: #fed7aa; }
+  .inline-btn.orange:hover { background: var(--warning); color: white; border-color: var(--warning); }
+
+  /* Quick actions */
+  .quick-actions {
+    padding: 12px 16px 4px;
+    display: flex;
+    gap: 8px;
+    overflow-x: auto;
+    border-top: 1px solid var(--border);
+    background: #fafbfc;
+  }
+  .quick-actions::-webkit-scrollbar { height: 4px; }
+  .quick-actions::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+  .qa-btn {
+    flex-shrink: 0;
+    background: white;
+    border: 1px solid var(--border);
+    color: var(--text);
+    padding: 8px 14px;
+    border-radius: 20px;
+    font-size: 12px;
+    cursor: pointer;
+    font-weight: 600;
+    white-space: nowrap;
+    transition: all 0.15s;
+    display: inline-flex; align-items: center; gap: 6px;
+  }
+  .qa-btn:hover {
+    background: var(--primary); color: white; border-color: var(--primary);
+    transform: translateY(-1px);
+  }
+
+  /* Input area */
+  .input-area {
+    padding: 14px 16px;
+    border-top: 1px solid var(--border);
+    background: var(--surface);
+    display: flex;
+    gap: 10px;
+    align-items: flex-end;
+  }
+  .text-input {
+    flex: 1;
+    border: 1.5px solid var(--border);
+    border-radius: 22px;
+    padding: 12px 18px;
+    font-size: 14px;
+    font-family: inherit;
+    outline: none;
+    transition: border-color 0.15s;
+    min-height: 44px;
+    max-height: 120px;
+    resize: none;
+    overflow-y: auto;
+  }
+  .text-input:focus { border-color: var(--primary); }
+  .send-btn, .mic-btn {
+    width: 44px; height: 44px;
+    border: none;
+    border-radius: 50%;
+    cursor: pointer;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 18px;
+    transition: all 0.15s;
+    flex-shrink: 0;
+  }
+  .send-btn {
+    background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+    color: white;
+  }
+  .send-btn:hover { transform: scale(1.05); box-shadow: 0 4px 12px rgba(124,58,237,0.4); }
+  .mic-btn {
+    background: #fee2e2;
+    color: #dc2626;
+    border: 1.5px solid #fecaca;
+  }
+  .mic-btn:hover { background: #fecaca; }
+  .mic-btn.listening {
+    background: #dc2626; color: white;
+    animation: micPulse 1.2s infinite;
+  }
+  @keyframes micPulse {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(220,38,38,0.5); }
+    50% { box-shadow: 0 0 0 10px rgba(220,38,38,0); }
+  }
+
+  /* Typing indicator */
+  .typing {
+    align-self: flex-start;
+    background: #f1f5f9;
+    padding: 14px 18px;
+    border-radius: var(--radius);
+    border-bottom-left-radius: 4px;
+    border-left: 3px solid var(--accent);
+    display: flex; gap: 4px;
+  }
+  .typing span {
+    width: 7px; height: 7px;
+    background: var(--text-muted);
+    border-radius: 50%;
+    animation: typingBounce 1.4s infinite;
+  }
+  .typing span:nth-child(2) { animation-delay: 0.2s; }
+  .typing span:nth-child(3) { animation-delay: 0.4s; }
+  @keyframes typingBounce {
+    0%, 60%, 100% { transform: translateY(0); opacity: 0.4; }
+    30% { transform: translateY(-6px); opacity: 1; }
+  }
+
+  /* Modal */
+  .modal-overlay {
+    position: fixed; inset: 0;
+    background: rgba(15, 23, 42, 0.6);
+    backdrop-filter: blur(4px);
+    display: none;
+    align-items: center; justify-content: center;
+    z-index: 1000;
+    padding: 16px;
+    animation: fadeIn 0.2s;
+  }
+  .modal-overlay.show { display: flex; }
+  @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+  .modal {
+    background: white;
+    border-radius: 18px;
+    max-width: 460px; width: 100%;
+    max-height: 90vh; overflow-y: auto;
+    box-shadow: var(--shadow-lg);
+    animation: modalIn 0.25s ease-out;
+  }
+  @keyframes modalIn {
+    from { transform: scale(0.95); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+  }
+  .modal-header {
+    padding: 18px 20px;
+    border-bottom: 1px solid var(--border);
+    display: flex; align-items: center; gap: 10px;
+  }
+  .modal-header h3 { font-size: 16px; font-weight: 700; flex: 1; }
+  .modal-close {
+    background: #f1f5f9; border: none;
+    width: 30px; height: 30px;
+    border-radius: 8px; cursor: pointer;
+    font-size: 18px; color: var(--text-muted);
+  }
+  .modal-close:hover { background: #e2e8f0; }
+  .modal-body { padding: 20px; }
+  .form-group { margin-bottom: 14px; }
+  .form-group label {
+    display: block;
+    font-size: 13px; font-weight: 600;
+    margin-bottom: 6px;
+    color: var(--text);
+  }
+  .form-group input, .form-group select, .form-group textarea {
+    width: 100%;
+    padding: 10px 12px;
+    border: 1.5px solid var(--border);
+    border-radius: 10px;
+    font-size: 14px;
+    font-family: inherit;
+    outline: none;
+    transition: border-color 0.15s;
+  }
+  .form-group input:focus, .form-group select:focus, .form-group textarea:focus {
+    border-color: var(--primary);
+  }
+  .form-actions { display: flex; gap: 10px; margin-top: 18px; }
+  .btn {
+    flex: 1;
+    padding: 12px;
+    border: none;
+    border-radius: 10px;
+    font-size: 14px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.15s;
+  }
+  .btn-primary {
+    background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
+    color: white;
+  }
+  .btn-primary:hover { transform: translateY(-1px); box-shadow: 0 6px 16px rgba(124,58,237,0.35); }
+  .btn-secondary {
+    background: #f1f5f9; color: var(--text);
+  }
+  .btn-secondary:hover { background: #e2e8f0; }
+  .btn-success {
+    background: linear-gradient(135deg, #16a34a 0%, #15803d 100%);
+    color: white;
+  }
+  .btn-success:hover { transform: translateY(-1px); box-shadow: 0 6px 16px rgba(22,163,74,0.35); }
+  .btn-wa {
+    background: linear-gradient(135deg, #25d366 0%, #128c7e 100%);
+    color: white;
+    text-decoration: none;
+    display: flex; align-items: center; justify-content: center; gap: 8px;
+  }
+
+  /* Easypaisa modal content */
+  .payment-info {
+    background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+    border: 1.5px solid #fcd34d;
+    border-radius: 12px;
+    padding: 16px;
+    margin-bottom: 14px;
+  }
+  .payment-info .label { font-size: 12px; color: #78350f; font-weight: 600; }
+  .payment-info .value { font-size: 22px; font-weight: 800; color: #78350f; margin: 4px 0; letter-spacing: 1px; }
+  .payment-info .amount { font-size: 16px; color: #78350f; font-weight: 700; }
+  .payment-steps { font-size: 13px; color: var(--text); line-height: 1.7; padding-left: 18px; }
+  .payment-steps li { margin: 6px 0; }
+
+  /* Schedule display */
+  .schedule-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+    margin: 14px 0;
+  }
+  .schedule-card {
+    background: #f8fafc;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    padding: 12px;
+    text-align: center;
+  }
+  .schedule-card .day { font-size: 13px; font-weight: 700; color: var(--primary); }
+  .schedule-card .time { font-size: 11px; color: var(--text-muted); margin-top: 2px; }
+
+  /* Footer */
+  .footer-info {
+    padding: 8px 16px;
+    background: #fafbfc;
+    border-top: 1px solid var(--border);
+    font-size: 11px;
+    color: var(--text-muted);
+    text-align: center;
+  }
+  .footer-info a { color: var(--primary); text-decoration: none; font-weight: 600; }
+
+  /* Voice indicator banner */
+  .voice-banner {
+    position: fixed;
+    top: 16px; left: 50%;
+    transform: translateX(-50%);
+    background: linear-gradient(135deg, #dc2626 0%, #991b1b 100%);
+    color: white;
+    padding: 10px 20px;
+    border-radius: 24px;
+    font-size: 13px;
+    font-weight: 600;
+    box-shadow: 0 8px 24px rgba(220,38,38,0.4);
+    display: none;
+    align-items: center; gap: 8px;
+    z-index: 999;
+    animation: slideDown 0.3s;
+  }
+  .voice-banner.show { display: flex; }
+  @keyframes slideDown {
+    from { transform: translate(-50%, -20px); opacity: 0; }
+    to { transform: translate(-50%, 0); opacity: 1; }
+  }
+
+  /* Hide PWA install when in iframe */
+  body.in-iframe .pwa-only { display: none !important; }
+
+  /* Mobile responsive */
+  @media (max-width: 600px) {
+    .app { box-shadow: none; }
+    header { padding: 14px 16px; }
+    .header-text h1 { font-size: 16px; }
+    .chat { padding: 14px; }
+    .msg { font-size: 13px; max-width: 90%; }
+  }
+</style>
+</head>
+<body>
+<div class="app">
+  <header>
+    <div class="logo">N</div>
+    <div class="header-text">
+      <h1>Noor Kids AI Academy</h1>
+      <p><span class="status-dot"></span> <span id="statusText">Online - AI Voice Assistant</span></p>
+    </div>
+    <div class="header-actions">
+      <button class="icon-btn" id="voiceToggle" title="Toggle voice replies" aria-label="Toggle voice">🔊</button>
+      <button class="icon-btn pwa-only" id="installBtn" title="Install app" style="display:none">📲</button>
+    </div>
+  </header>
+
+  <div class="welcome">
+    <span>👋</span>
+    <span>Assalam-o-Alaikum! I am your AI assistant. Ask me about our AI course, fees, schedule, or tap "Enroll Now".</span>
+  </div>
+
+  <div class="chat" id="chat">
+    <!-- Messages will be inserted here -->
+  </div>
+
+  <div class="quick-actions">
+    <button class="qa-btn" data-q="Tell me about the course">📚 Course Details</button>
+    <button class="qa-btn" data-q="What is the class schedule?">🗓️ Schedule</button>
+    <button class="qa-btn" data-q="What are the fees and how to pay?">💰 Fees</button>
+    <button class="qa-btn" data-q="What will my child learn?">🎓 Syllabus</button>
+    <button class="qa-btn" data-q="How to enroll">✍️ Enroll</button>
+    <button class="qa-btn" data-q="Contact information">📞 Contact</button>
+  </div>
+
+  <div class="input-area">
+    <button class="mic-btn" id="micBtn" title="Tap and speak" aria-label="Speak">🎤</button>
+    <textarea class="text-input" id="textInput" placeholder="Type your question... (or tap 🎤 to speak)" rows="1"></textarea>
+    <button class="send-btn" id="sendBtn" title="Send" aria-label="Send">➤</button>
+  </div>
+
+  <div class="footer-info">
+    📞 0333-1250524 &nbsp;|&nbsp; ✉️ noorkidsaiacademy@gmail.com &nbsp;|&nbsp; <a href="https://sites.google.com/view/noor-kids-ai-academy" target="_blank" rel="noopener">Website</a>
+  </div>
+</div>
+
+<!-- Voice listening banner -->
+<div class="voice-banner" id="voiceBanner">
+  <span>🎙️</span> <span>Listening... speak now</span>
+</div>
+
+<!-- Enrollment Modal -->
+<div class="modal-overlay" id="enrollModal">
+  <div class="modal">
+    <div class="modal-header">
+      <h3>✍️ Enroll Your Child</h3>
+      <button class="modal-close" data-close>&times;</button>
+    </div>
+    <div class="modal-body">
+      <p style="font-size:13px;color:var(--text-muted);margin-bottom:16px;">Fill this form. After submitting, you'll get a WhatsApp link to confirm and pay fees via Easypaisa.</p>
+      <div class="form-group">
+        <label>Parent / Guardian Name *</label>
+        <input type="text" id="leadName" placeholder="e.g. Ahmed Khan" required>
+      </div>
+      <div class="form-group">
+        <label>WhatsApp Number *</label>
+        <input type="tel" id="leadPhone" placeholder="e.g. 03001234567" required>
+      </div>
+      <div class="form-group">
+        <label>Child Name *</label>
+        <input type="text" id="leadChild" placeholder="e.g. Ali Khan" required>
+      </div>
+      <div class="form-group">
+        <label>Child Age</label>
+        <select id="leadAge">
+          <option value="">Select age</option>
+          <option>7-9 years</option>
+          <option>10-12 years</option>
+          <option>13-15 years</option>
+          <option>16+ years</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Device for Class</label>
+        <select id="leadDevice">
+          <option value="">Select device</option>
+          <option>Laptop / Computer</option>
+          <option>Mobile Phone</option>
+          <option>Tablet</option>
+        </select>
+      </div>
+      <div class="form-actions">
+        <button class="btn btn-secondary" data-close>Cancel</button>
+        <button class="btn btn-primary" id="submitLead">Submit & Open WhatsApp</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Payment Modal -->
+<div class="modal-overlay" id="paymentModal">
+  <div class="modal">
+    <div class="modal-header">
+      <h3>💰 Fees & Easypaisa Payment</h3>
+      <button class="modal-close" data-close>&times;</button>
+    </div>
+    <div class="modal-body">
+      <div class="payment-info">
+        <div class="label">Easypaisa Account Number</div>
+        <div class="value">0333-1250524</div>
+        <div class="label">Monthly Fee</div>
+        <div class="amount">PKR 500 / month</div>
+      </div>
+      <p style="font-size:13px;font-weight:600;margin-bottom:8px;">How to pay via Easypaisa:</p>
+      <ol class="payment-steps">
+        <li>Open <b>Easypaisa App</b> on your phone</li>
+        <li>Tap <b>"Send Money"</b></li>
+        <li>Select <b>"Easy Paisa Account"</b></li>
+        <li>Enter number: <b>03331250524</b></li>
+        <li>Enter amount: <b>500 PKR</b></li>
+        <li>Take a <b>screenshot</b> of the payment confirmation</li>
+        <li>Send the screenshot on <b>WhatsApp 0333-1250524</b> with your child's name</li>
+      </ol>
+      <div class="form-actions">
+        <button class="btn btn-secondary" data-close>Close</button>
+        <a href="https://wa.me/923331250524?text=Assalam-o-Alaikum,%20I%20want%20to%20pay%20fees%20for%20Noor%20Kids%20AI%20Academy.%20I%20will%20send%20Easypaisa%20screenshot." class="btn btn-wa" target="_blank" rel="noopener">💬 Confirm on WhatsApp</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Schedule Modal -->
+<div class="modal-overlay" id="scheduleModal">
+  <div class="modal">
+    <div class="modal-header">
+      <h3>🗓️ Class Schedule</h3>
+      <button class="modal-close" data-close>&times;</button>
+    </div>
+    <div class="modal-body">
+      <p style="font-size:13px;color:var(--text-muted);margin-bottom:8px;">Classes are held <b>4 days a week</b>, 45 minutes each, online via Google Meet.</p>
+      <div class="schedule-grid">
+        <div class="schedule-card"><div class="day">Monday</div><div class="time">8:00 PM</div></div>
+        <div class="schedule-card"><div class="day">Wednesday</div><div class="time">8:00 PM</div></div>
+        <div class="schedule-card"><div class="day">Saturday</div><div class="time">8:00 PM</div></div>
+        <div class="schedule-card"><div class="day">Sunday</div><div class="time">8:00 PM</div></div>
+      </div>
+      <div style="background:#f0fdf4;border:1px solid #bbf7d0;border-radius:10px;padding:12px;font-size:13px;color:#14532d;">
+        <b>📌 Course Duration:</b> 1 Month<br>
+        <b>⏱️ Class Duration:</b> 45 minutes<br>
+        <b>💻 Platform:</b> Google Meet (link shared before class)<br>
+        <b>🎓 Format:</b> 90% Practical + 10% Theory
+      </div>
+      <div class="form-actions">
+        <button class="btn btn-secondary" data-close>Close</button>
+        <button class="btn btn-primary" data-enroll>Enroll Now</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ============================================================
+   NOOR KIDS AI ACADEMY - VOICE ASSISTANT
+   Self-contained, embeddable on Google Sites
+   ============================================================ */
+
+const INSTITUTE = {
+  name: "Noor Kids AI Academy",
+  tagline: "AI For Kids - 90% Practical, 10% Theory",
+  course: "AI For Kids",
+  duration: "1 month",
+  classDays: "Monday, Wednesday, Saturday, Sunday",
+  classTime: "8:00 PM (PKT)",
+  classDuration: "45 minutes",
+  classesPerWeek: 4,
+  platform: "Google Meet",
+  fee: "500 PKR per month",
+  easypaisa: "03331250524",
+  phone: "0333-1250524",
+  whatsapp: "923331250524",
+  email: "noorkidsaiacademy@gmail.com",
+  website: "https://sites.google.com/view/noor-kids-ai-academy",
+  formUrl: "https://forms.gle/6zrK2VQrJgERrB717",
+  format: "90% Practical + 10% Theory",
+  requirements: "Laptop/Computer preferred, but mobile phone users can also join",
+  topics: [
+    "AI Tools & Prompts - Basic prompts for AI tools",
+    "Presentations - Create AI-powered presentations",
+    "Chatbots - Build your own chatbots",
+    "Dashboards - Design detail dashboards",
+    "Websites - Develop websites using AI",
+    "Mobile Apps - Learn app development basics",
+    "Image Creation - Generate images using AI",
+    "Avatar Creation - Convert images to avatars",
+    "Animations - Convert images to videos + chatboard animations",
+    "Story Book - Create AI-generated story books"
+  ]
+};
+
+/* ---------------- KNOWLEDGE BASE / FAQ BRAIN ---------------- */
+const KNOWLEDGE = [
+  {
+    keywords: ['fee', 'fees', 'cost', 'price', 'charge', 'tuition', 'how much', 'paisa', 'fee kitna', 'kitne ka', 'kre', 'qimat'],
+    en: `Our course fee is <b>500 PKR per month</b>. The full course is 1 month. Payment is via <b>Easypaisa</b> to <b>${INSTITUTE.easypaisa}</b>.`,
+    ur: `Humara course fee hai <b>500 PKR per mahina</b>. Pura course 1 mahine ka hai. Payment Easypaisa par <b>${INSTITUTE.easypaisa}</b> par karein.`,
+    actions: [{ label: '💰 Pay via Easypaisa', action: 'openPayment' }, { label: '✍️ Enroll Now', action: 'openEnroll' }]
+  },
+  {
+    keywords: ['pay', 'payment', 'easypaisa', 'easypaysa', 'easy paisa', 'deposit', 'transfer', 'send money', 'jama', 'adaiigi'],
+    en: `You can pay via <b>Easypaisa</b>:<br>📱 Number: <b>${INSTITUTE.easypaisa}</b><br>💰 Amount: <b>500 PKR</b><br>After payment, send screenshot on WhatsApp <b>${INSTITUTE.phone}</b>.`,
+    ur: `Ap Easypaisa se payment karein:<br>📱 Number: <b>${INSTITUTE.easypaisa}</b><br>💰 Amount: <b>500 PKR</b><br>Payment ke baad WhatsApp <b>${INSTITUTE.phone}</b> par screenshot bhejein.`,
+    actions: [{ label: '💰 See Payment Steps', action: 'openPayment' }, { label: '💬 WhatsApp', action: 'openWhatsApp' }]
+  },
+  {
+    keywords: ['schedule', 'time', 'class when', 'class time', 'day', 'days', 'timing', ' kab', 'kab', 'waqt', 'din', 'klass kab', 'class kab'],
+    en: `Classes held <b>4 days a week</b>:<br>📅 Monday, Wednesday, Saturday, Sunday<br>🕐 Time: <b>${INSTITUTE.classTime}</b><br>⏱️ Duration: <b>${INSTITUTE.classDuration}</b><br>💻 Platform: <b>${INSTITUTE.platform}</b>`,
+    ur: `Classes <b>haftay mein 4 din</b> hoti hain:<br>📅 Peer, Buddh, hafta, Itwaar<br>🕐 Waqt: <b>${INSTITUTE.classTime}</b><br>⏱️ Duration: <b>${INSTITUTE.classDuration}</b><br>💻 Platform: <b>${INSTITUTE.platform}</b>`,
+    actions: [{ label: '🗓️ Full Schedule', action: 'openSchedule' }]
+  },
+  {
+    keywords: ['course', 'about', 'what is', 'tell me', 'detail', 'information', 'info', 'kurs', 'kya hai', 'batao', 'kya', 'mahfooz', 'toseeh'],
+    en: `<b>${INSTITUTE.course}</b> course for kids and students.<br><br>📚 <b>Duration:</b> ${INSTITUTE.duration}<br>🎓 <b>Format:</b> ${INSTITUTE.format}<br>📅 <b>Schedule:</b> ${INSTITUTE.classDays} at ${INSTITUTE.classTime}<br>💻 <b>Platform:</b> ${INSTITUTE.platform}<br>💰 <b>Fee:</b> ${INSTITUTE.fee}<br><br>Students will learn AI tools from scratch with practical projects every class.`,
+    ur: `<b>${INSTITUTE.course}</b> course bacchon aur students ke liye.<br><br>📚 <b>Duration:</b> ${INSTITUTE.duration}<br>🎓 <b>Format:</b> ${INSTITUTE.format}<br>📅 <b>Schedule:</b> ${INSTITUTE.classDays} ko ${INSTITUTE.classTime}<br>💻 <b>Platform:</b> ${INSTITUTE.platform}<br>💰 <b>Fee:</b> ${INSTITUTE.fee}<br><br>Students scratch se AI tools seekhein ge, har class mein practical project ke saath.`,
+    actions: [{ label: '🎓 What They Learn', action: 'showSyllabus' }, { label: '✍️ Enroll Now', action: 'openEnroll' }]
+  },
+  {
+    keywords: ['learn', 'syllabus', 'curriculum', 'teach', 'topics', 'subject', 'study', 'seekhna', 'sylabus', 'mawduaat', 'parhana'],
+    en: `<b>What your child will learn (10 modules):</b><br><ul>${INSTITUTE.topics.map((t,i) => `<li><b>${i+1}.</b> ${t}</li>`).join('')}</ul><br>Every class includes a small project. By the end, your child will have created images, storybooks, chatbots, and more!`,
+    ur: `<b>Aap ka bacha kya seekhega (10 modules):</b><br><ul>${INSTITUTE.topics.map((t,i) => `<li><b>${i+1}.</b> ${t}</li>`).join('')}</ul><br>Har class mein ek chota project hota hai. Course ke baad aap ka bacha images, storybooks, chatbots, aur bohot kuch bana chuka hoga!`,
+    actions: [{ label: '✍️ Enroll Now', action: 'openEnroll' }]
+  },
+  {
+    keywords: ['enroll', 'admission', 'register', 'join', 'sign up', 'apply', 'dakhla', 'register karna', 'shamil', 'nam likhna'],
+    en: `Great! Let's enroll your child. Please fill the quick form, and we'll connect you on WhatsApp to confirm and share payment details.`,
+    ur: `Bahut khoob! Chalein ap ke bachay ka enrollment karte hain. Bara-e-mehrbani form bharein, hum WhatsApp par confirm karenge aur payment details bhejein ge.`,
+    actions: [{ label: '✍️ Open Enrollment Form', action: 'openEnroll' }]
+  },
+  {
+    keywords: ['contact', 'phone', 'number', 'call', 'whatsapp', 'email', 'reach', 'rabta', 'number', 'call', 'whatsapp', 'email'],
+    en: `<b>Contact Information:</b><br>📞 Phone/WhatsApp: <b>${INSTITUTE.phone}</b><br>✉️ Email: <b>${INSTITUTE.email}</b><br>🌐 Website: <a href="${INSTITUTE.website}" target="_blank">${INSTITUTE.website}</a><br><br>For enrollment: tap WhatsApp button below.`,
+    ur: `<b>Rabta karne ki information:</b><br>📞 Phone/WhatsApp: <b>${INSTITUTE.phone}</b><br>✉️ Email: <b>${INSTITUTE.email}</b><br>🌐 Website: <a href="${INSTITUTE.website}" target="_blank">Google Site</a><br><br>Enrollment ke liye WhatsApp button dabayein.`,
+    actions: [{ label: '💬 WhatsApp Us', action: 'openWhatsApp' }, { label: '✍️ Enroll', action: 'openEnroll' }]
+  },
+  {
+    keywords: ['whatsapp', 'watsapp', 'whats app', 'message', 'chat'],
+    en: `You can WhatsApp us directly at <b>${INSTITUTE.phone}</b>. Tap below to open WhatsApp.`,
+    ur: `Aap humein direct WhatsApp kar sakte hain <b>${INSTITUTE.phone}</b> par. Niche dabayein.`,
+    actions: [{ label: '💬 Open WhatsApp', action: 'openWhatsApp' }]
+  },
+  {
+    keywords: ['requirement', 'laptop', 'computer', 'mobile', 'device', 'pc', 'need', 'zaroorat', 'device', 'laptop'],
+    en: `<b>Requirements:</b><br>💻 Laptop or Computer is <b>preferred</b> for best experience<br>📱 Mobile phone users can also join<br>🌐 Stable internet connection<br>📧 Gmail account for Google Meet<br><br>Don't worry if you only have a mobile - we support both!`,
+    ur: `<b>Zarooriyat:</b><br>💻 Laptop ya Computer <b>behtar</b> hai<br>📱 Mobile phone wale bhi join kar sakte hain<br>🌐 Internet connection<br>📧 Google Meet ke liye Gmail account<br><br>Agar sirf mobile hai to bhi koi masla nahi!`,
+  },
+  {
+    keywords: ['duration', 'how long', 'month', 'week', 'kitna time', 'kitna lamba', 'kitne din', 'kitna mahina'],
+    en: `The complete course is <b>1 month</b> long with <b>4 classes per week</b> (${INSTITUTE.classDays}). Each class is ${INSTITUTE.classDuration}. Total ~16 classes.`,
+    ur: `Pura course <b>1 mahina</b> ka hai, <b>haftay mein 4 classes</b> (${INSTITUTE.classDays}). Har class ${INSTITUTE.classDuration} ki. Kul ~16 classes.`,
+  },
+  {
+    keywords: ['who', 'age', 'kids', 'children', 'student', 'bacha', 'umar', 'bacche', 'students'],
+    en: `This course is designed for <b>kids and students aged 7 to 16+</b>. We adjust complexity based on age. Both kids with laptops and mobile-only students can join.`,
+    ur: `Yeh course <b>7 se 16+ saal ke bacchon ke liye</b> hai. Hum umar ke mutabiq complexity adjust karte hain. Laptop aur mobile wale sab join kar sakte hain.`,
+  },
+  {
+    keywords: ['teacher', 'instructor', 'who teach', 'ustad', 'moalim', 'parhana kis se'],
+    en: `Classes are taught by experienced AI instructors at Noor Kids AI Academy. Every class includes live demo, hands-on practice, and a small project.`,
+    ur: `Classes Noor Kids AI Academy ke experienced AI instructors padhate hain. Har class mein live demo, practice, aur ek chota project hota hai.`,
+  },
+  {
+    keywords: ['demo', 'trial', 'free class', 'try', 'test', 'demo class', 'azmayish', 'free class'],
+    en: `We offer a <b>free demo class</b> for new students. WhatsApp us at <b>${INSTITUTE.phone}</b> to book your demo slot.`,
+    ur: `Hum naye students ke liye <b>free demo class</b> dete hain. WhatsApp <b>${INSTITUTE.phone}</b> par slot book karein.`,
+    actions: [{ label: '💬 Book Demo on WhatsApp', action: 'openWhatsApp' }]
+  },
+  {
+    keywords: ['certificate', 'certification', 'sanad', 'certificate'],
+    en: `Yes! Students who complete the course and final project receive a <b>"Junior AI Creator" certificate</b> from Noor Kids AI Academy.`,
+    ur: `Ji haan! Course aur final project mukammal karne wale students ko <b>"Junior AI Creator" certificate</b> milega.`,
+  },
+  {
+    keywords: ['project', 'portfolio', 'kaam', 'kya banayenge'],
+    en: `Students create real projects in every class: AI images, storybooks, chatbots, posters, animations, mobile apps, and more. By course end, they'll have a complete portfolio.`,
+    ur: `Students har class mein real projects banate hain: AI images, storybooks, chatbots, posters, animations, mobile apps, aur bohot kuch. Course ke baad pura portfolio tayyar hoga.`,
+  },
+  {
+    keywords: ['safe', 'safety', 'secure', 'privacy', 'mehfooz', 'safety'],
+    en: `Yes, classes are <b>100% safe</b>. All sessions are on Google Meet, supervised by instructors. We also teach AI safety and ethics in the course.`,
+    ur: `Ji haan, classes <b>100% mehfooz</b> hain. Sab sessions Google Meet par hote hain, instructors ke nigrani mein. Course mein AI safety aur ethics bhi parhaya jata hai.`,
+  },
+  {
+    keywords: ['language', 'urdu', 'english', 'zuban', 'kis zuban', 'language'],
+    en: `Classes are taught in <b>Urdu + English</b> (bilingual) so every student can understand easily. Course material is also bilingual.`,
+    ur: `Classes <b>Urdu + English</b> mein hoti hain (do zubani) taake har student aasani se samajh sake. Course material bhi do zubani hai.`,
+  },
+  {
+    keywords: ['refund', 'cancel', 'money back', 'wapis', 'refund'],
+    en: `Fee is non-refundable but very affordable (500 PKR/month). If you're not satisfied after first class, contact us on WhatsApp to discuss options.`,
+    ur: `Fee refund nahi hoti lekin bohot munasib hai (500 PKR/mahina). Agar pehli class ke baad satisfied nahi hain, WhatsApp par rabta karein.`,
+  }
+];
+
+const DEFAULT_RESPONSE = {
+  en: `I can help you with: course details, fees, schedule, syllabus, enrollment, or contact info. Try asking "What is the fee?" or tap a quick button below. 😊`,
+  ur: `Main aap ki madad kar sakta hoon: course details, fees, schedule, syllabus, enrollment, ya contact info ke baare mein. Poochein "Fee kitna hai?" ya niche ek button dabayein. 😊`
+};
+
+const GREETING_RESPONSE = {
+  en: `Walaikum Assalam! Welcome to Noor Kids AI Academy. 🌟<br><br>I can help you with:<br>📚 Course details<br>💰 Fees & payment<br>🗓️ Class schedule<br>🎓 Syllabus<br>✍️ Enrollment<br><br>Just ask me anything or tap a quick button below!`,
+  ur: `Walaikum Assalam! Noor Kids AI Academy mein khush aamdeed. 🌟<br><br>Main aap ki madad kar sakta hoon:<br>📚 Course details<br>💰 Fees & payment<br>🗓️ Class schedule<br>🎓 Syllabus<br>✍️ Enrollment<br><br>Kuch bhi poochein ya niche button dabayein!`
+};
+
+/* ---------------- STATE ---------------- */
+let voiceRepliesOn = true;
+let isListening = false;
+let recognition = null;
+let preferredLang = 'en-US'; // default English, switch to Urdu if user speaks Urdu
+let conversationLang = 'en'; // 'en' or 'ur'
+
+/* ---------------- DOM ELEMENTS ---------------- */
+const chatEl = document.getElementById('chat');
+const textInput = document.getElementById('textInput');
+const sendBtn = document.getElementById('sendBtn');
+const micBtn = document.getElementById('micBtn');
+const voiceToggle = document.getElementById('voiceToggle');
+const voiceBanner = document.getElementById('voiceBanner');
+const statusText = document.getElementById('statusText');
+
+/* ---------------- INITIALIZE ---------------- */
+function init() {
+  // Detect if running in iframe (Google Sites embed)
+  if (window.self !== window.top) {
+    document.body.classList.add('in-iframe');
+  }
+
+  // Show greeting
+  setTimeout(() => {
+    addBotMessage(GREETING_RESPONSE.en, true);
+  }, 400);
+
+  // Setup speech recognition
+  setupSpeechRecognition();
+
+  // Setup event listeners
+  setupEventListeners();
+
+  // Register service worker for PWA
+  if ('serviceWorker' in navigator && window.self === window.top) {
+    navigator.serviceWorker.register('sw.js').catch(() => {});
+  }
+
+  // Load voices for TTS
+  loadVoices();
+}
+
+/* ---------------- SPEECH RECOGNITION ---------------- */
+function setupSpeechRecognition() {
+  const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+  if (!SR) {
+    micBtn.style.display = 'none';
+    return;
+  }
+  recognition = new SR();
+  recognition.continuous = false;
+  recognition.interimResults = false;
+  recognition.maxAlternatives = 1;
+
+  recognition.onstart = () => {
+    isListening = true;
+    micBtn.classList.add('listening');
+    voiceBanner.classList.add('show');
+  };
+
+  recognition.onresult = (event) => {
+    const transcript = event.results[0][0].transcript;
+    textInput.value = transcript;
+    // Detect language from transcript (basic)
+    conversationLang = detectLanguage(transcript);
+    sendMessage();
+  };
+
+  recognition.onerror = (event) => {
+    console.warn('Speech recognition error:', event.error);
+    if (event.error === 'no-speech') {
+      addBotMessage("I didn't hear you. Please try tapping the mic again and speak clearly. 🎤");
+    } else if (event.error === 'not-allowed') {
+      addBotMessage("Microphone access is blocked. Please allow microphone in your browser settings, or type your question instead. ⚙️");
+    }
+  };
+
+  recognition.onend = () => {
+    isListening = false;
+    micBtn.classList.remove('listening');
+    voiceBanner.classList.remove('show');
+  };
+}
+
+function detectLanguage(text) {
+  // Detect Urdu characters
+  const urduRegex = /[\u0600-\u06FF]/;
+  if (urduRegex.test(text)) return 'ur';
+  // Detect common Roman Urdu keywords
+  const romanUrdu = ['kya', 'hai', 'kaise', 'kab', 'kitna', 'kahan', 'kyun', 'bhai', 'salam', 'assalam', 'acha', 'theek', 'karenge', 'chahiye', 'batao', 'mera', 'aap'];
+  const lower = text.toLowerCase();
+  const matches = romanUrdu.filter(w => lower.includes(w));
+  if (matches.length >= 1) return 'ur';
+  return 'en';
+}
+
+/* ---------------- SPEECH SYNTHESIS ---------------- */
+function loadVoices() {
+  if ('speechSynthesis' in window) {
+    window.speechSynthesis.getVoices();
+  }
+}
+
+function speak(text, lang) {
+  if (!voiceRepliesOn || !('speechSynthesis' in window)) return;
+  // Strip HTML tags for speech
+  const cleanText = text.replace(/<[^>]*>/g, ' ').replace(/&[a-z]+;/g, ' ').replace(/\s+/g, ' ').trim();
+  if (!cleanText) return;
+
+  window.speechSynthesis.cancel();
+  const utter = new SpeechSynthesisUtterance(cleanText);
+  utter.lang = (lang === 'ur') ? 'ur-PK' : 'en-US';
+  utter.rate = 0.95;
+  utter.pitch = 1.0;
+  
+  // Try to find matching voice
+  const voices = window.speechSynthesis.getVoices();
+  const matchingVoice = voices.find(v => v.lang.startsWith(lang === 'ur' ? 'ur' : 'en'));
+  if (matchingVoice) utter.voice = matchingVoice;
+
+  window.speechSynthesis.speak(utter);
+}
+
+/* ---------------- EVENT LISTENERS ---------------- */
+function setupEventListeners() {
+  sendBtn.addEventListener('click', sendMessage);
+  textInput.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter' && !e.shiftKey) {
+      e.preventDefault();
+      sendMessage();
+    }
+  });
+  textInput.addEventListener('input', autoResize);
+
+  micBtn.addEventListener('click', toggleListening);
+  voiceToggle.addEventListener('click', toggleVoiceReplies);
+
+  // Quick action buttons
+  document.querySelectorAll('.qa-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      const q = btn.dataset.q;
+      textInput.value = q;
+      sendMessage();
+    });
+  });
+
+  // Modal close handlers
+  document.querySelectorAll('[data-close]').forEach(el => {
+    el.addEventListener('click', () => {
+      el.closest('.modal-overlay').classList.remove('show');
+    });
+  });
+
+  // Click outside modal to close
+  document.querySelectorAll('.modal-overlay').forEach(overlay => {
+    overlay.addEventListener('click', (e) => {
+      if (e.target === overlay) overlay.classList.remove('show');
+    });
+  });
+
+  // Enroll buttons inside modals
+  document.querySelectorAll('[data-enroll]').forEach(el => {
+    el.addEventListener('click', () => {
+      document.getElementById('scheduleModal').classList.remove('show');
+      document.getElementById('enrollModal').classList.add('show');
+    });
+  });
+
+  // Submit lead form
+  document.getElementById('submitLead').addEventListener('click', submitLead);
+}
+
+function autoResize() {
+  textInput.style.height = 'auto';
+  textInput.style.height = Math.min(textInput.scrollHeight, 120) + 'px';
+}
+
+function toggleListening() {
+  if (!recognition) {
+    addBotMessage("Voice input is not supported in this browser. Please use Chrome or Edge, or type your question instead. 📝");
+    return;
+  }
+  if (isListening) {
+    recognition.stop();
+  } else {
+    window.speechSynthesis.cancel(); // stop any ongoing speech
+    try {
+      recognition.lang = preferredLang;
+      recognition.start();
+    } catch (err) {
+      console.warn(err);
+    }
+  }
+}
+
+function toggleVoiceReplies() {
+  voiceRepliesOn = !voiceRepliesOn;
+  voiceToggle.textContent = voiceRepliesOn ? '🔊' : '🔇';
+  voiceToggle.title = voiceRepliesOn ? 'Voice replies ON' : 'Voice replies OFF';
+  if (!voiceRepliesOn) window.speechSynthesis.cancel();
+  statusText.textContent = voiceRepliesOn ? 'Online - AI Voice Assistant' : 'Online - Text Mode';
+}
+
+/* ---------------- SEND MESSAGE ---------------- */
+function sendMessage() {
+  const text = textInput.value.trim();
+  if (!text) return;
+
+  addUserMessage(text);
+  textInput.value = '';
+  textInput.style.height = 'auto';
+
+  // Detect language of input
+  conversationLang = detectLanguage(text);
+
+  // Show typing indicator
+  showTyping();
+
+  // Process after small delay for natural feel
+  setTimeout(() => {
+    hideTyping();
+    const response = findResponse(text);
+    addBotMessage(response.text, true, response.actions);
+    speak(response.text, conversationLang);
+  }, 600 + Math.random() * 400);
+}
+
+/* ---------------- KNOWLEDGE MATCHING ---------------- */
+function findResponse(query) {
+  const lower = query.toLowerCase();
+
+  // Greeting detection
+  if (/\b(assalam|salam|salaam|hello|hi|hey|bonjour|good morning|good evening|good afternoon)\b/i.test(lower)) {
+    return { text: GREETING_RESPONSE[conversationLang] || GREETING_RESPONSE.en, actions: [] };
+  }
+
+  // Thanks
+  if (/\b(thank|thanks|shukria|shukriya|appreciate)\b/i.test(lower)) {
+    return { 
+      text: conversationLang === 'ur' 
+        ? 'Aap ka shukriya! Aur kuch poochna hai? Main yahan hoon. 😊' 
+        : "You're welcome! Anything else you'd like to know? I'm here to help. 😊",
+      actions: []
+    };
+  }
+
+  // Match against knowledge base
+  let bestMatch = null;
+  let bestScore = 0;
+
+  for (const item of KNOWLEDGE) {
+    let score = 0;
+    for (const keyword of item.keywords) {
+      if (lower.includes(keyword)) {
+        score += keyword.length > 4 ? 2 : 1; // longer keywords weight more
+      }
+    }
+    if (score > bestScore) {
+      bestScore = score;
+      bestMatch = item;
+    }
+  }
+
+  if (bestMatch && bestScore > 0) {
+    return {
+      text: bestMatch[conversationLang] || bestMatch.en,
+      actions: bestMatch.actions || []
+    };
+  }
+
+  return {
+    text: conversationLang === 'ur' ? DEFAULT_RESPONSE.ur : DEFAULT_RESPONSE.en,
+    actions: [
+      { label: '📞 Contact', action: 'openWhatsApp' },
+      { label: '✍️ Enroll', action: 'openEnroll' }
+    ]
+  };
+}
+
+/* ---------------- UI HELPERS ---------------- */
+function addUserMessage(text) {
+  const div = document.createElement('div');
+  div.className = 'msg user';
+  div.textContent = text;
+  chatEl.appendChild(div);
+  scrollChat();
+}
+
+function addBotMessage(html, speakable, actions) {
+  const div = document.createElement('div');
+  div.className = 'msg bot';
+  div.innerHTML = html;
+  if (actions && actions.length) {
+    const actionRow = document.createElement('div');
+    actionRow.className = 'action-row';
+    actions.forEach(a => {
+      const btn = document.createElement('button');
+      btn.className = 'inline-btn';
+      if (a.action === 'openWhatsApp') btn.classList.add('green');
+      if (a.action === 'openPayment') btn.classList.add('orange');
+      btn.textContent = a.label;
+      btn.addEventListener('click', () => handleAction(a.action));
+      actionRow.appendChild(btn);
+    });
+    div.appendChild(actionRow);
+  }
+  chatEl.appendChild(div);
+  scrollChat();
+}
+
+function showTyping() {
+  const div = document.createElement('div');
+  div.className = 'typing';
+  div.id = 'typingIndicator';
+  div.innerHTML = '<span></span><span></span><span></span>';
+  chatEl.appendChild(div);
+  scrollChat();
+}
+
+function hideTyping() {
+  const el = document.getElementById('typingIndicator');
+  if (el) el.remove();
+}
+
+function scrollChat() {
+  setTimeout(() => {
+    chatEl.scrollTop = chatEl.scrollHeight;
+  }, 50);
+}
+
+/* ---------------- ACTION HANDLERS ---------------- */
+function handleAction(action) {
+  switch (action) {
+    case 'openEnroll':
+      document.getElementById('enrollModal').classList.add('show');
+      break;
+    case 'openPayment':
+      document.getElementById('paymentModal').classList.add('show');
+      break;
+    case 'openSchedule':
+      document.getElementById('scheduleModal').classList.add('show');
+      break;
+    case 'openWhatsApp':
+      openWhatsApp();
+      break;
+    case 'showSyllabus':
+      const syllabus = KNOWLEDGE.find(k => k.keywords.includes('syllabus'));
+      if (syllabus) addBotMessage(syllabus[conversationLang] || syllabus.en, true, syllabus.actions);
+      break;
+  }
+}
+
+function openWhatsApp(message) {
+  const text = message || `Assalam-o-Alaikum Noor Kids AI Academy! I want to know more about the AI For Kids course. Please guide me.`;
+  const url = `https://wa.me/${INSTITUTE.whatsapp}?text=${encodeURIComponent(text)}`;
+  window.open(url, '_blank', 'noopener');
+}
+
+/* ---------------- LEAD SUBMISSION ---------------- */
+function submitLead() {
+  const name = document.getElementById('leadName').value.trim();
+  const phone = document.getElementById('leadPhone').value.trim();
+  const child = document.getElementById('leadChild').value.trim();
+  const age = document.getElementById('leadAge').value;
+  const device = document.getElementById('leadDevice').value;
+
+  if (!name || !phone || !child) {
+    alert('Please fill at least: Parent Name, WhatsApp Number, and Child Name.');
+    return;
+  }
+
+  // Save to localStorage as a simple lead log
+  const lead = { name, phone, child, age, device, timestamp: new Date().toISOString() };
+  const leads = JSON.parse(localStorage.getItem('noorLeads') || '[]');
+  leads.push(lead);
+  localStorage.setItem('noorLeads', JSON.stringify(leads));
+
+  // Build WhatsApp confirmation message
+  const waMessage = `Assalam-o-Alaikum Noor Kids AI Academy!
+
+I want to enroll my child. Details:
+Parent Name: ${name}
+WhatsApp: ${phone}
+Child Name: ${child}
+Child Age: ${age || 'Not specified'}
+Device: ${device || 'Not specified'}
+
+Please confirm enrollment and share Easypaisa payment details.`;
+
+  // Close modal
+  document.getElementById('enrollModal').classList.remove('show');
+
+  // Confirmation message in chat
+  addBotMessage(`✅ <b>Thank you ${name}!</b><br><br>Your enrollment request has been recorded. I'm opening WhatsApp now - please send the pre-filled message to confirm.<br><br>After that, our team will:<br>1. Confirm your child's slot<br>2. Share Easypaisa payment details (500 PKR)<br>3. Send Google Meet link for first class<br><br>📱 WhatsApp: ${INSTITUTE.phone}`, true, [
+    { label: '💬 Open WhatsApp Now', action: 'openWhatsApp' }
+  ]);
+
+  // Open WhatsApp with prefilled message
+  openWhatsApp(waMessage);
+
+  // Clear form
+  document.getElementById('leadName').value = '';
+  document.getElementById('leadPhone').value = '';
+  document.getElementById('leadChild').value = '';
+  document.getElementById('leadAge').value = '';
+  document.getElementById('leadDevice').value = '';
+}
+
+/* ---------------- START ---------------- */
+if (document.readyState === 'loading') {
+  document.addEventListener('DOMContentLoaded', init);
+} else {
+  init();
+}
+
+// Voices may load async
+if ('speechSynthesis' in window) {
+  window.speechSynthesis.onvoiceschanged = loadVoices;
+}
+</script>
+</body>
+</html>
