@@ -4,6 +4,9 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="theme-color" content="#1e40af">
+<meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+<meta http-equiv="Pragma" content="no-cache">
+<meta http-equiv="Expires" content="0">
 <meta name="description" content="Noor Kids AI Academy - AI For Kids Course. Learn AI tools, build chatbots, create images, storybooks, animations. 500 PKR/month, online classes.">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
@@ -1577,77 +1580,117 @@ Please confirm enrollment and share Easypaisa payment details.`;
    ============================================================ */
 const KNOWLEDGE = [
   {
-    keywords: ['fee', 'fees', 'cost', 'price', 'charge', 'tuition', 'how much', 'paisa', 'kitna', 'kre', 'qimat'],
-    en: `Our course fee is <b>500 PKR per month</b>. The full course is 1 month. Payment is via <b>Easypaisa</b> to <b>${INSTITUTE.easypaisa}</b>.`,
-    ur: `Humara course fee hai <b>500 PKR per mahina</b>. Pura course 1 mahine ka hai. Payment Easypaisa par <b>${INSTITUTE.easypaisa}</b> par karein.`,
+    keywords: ['fee', 'fees', 'cost', 'price', 'charge', 'tuition', 'how much', 'paisa', 'kitna', 'kre', 'qimat', 'fee kitna', 'fee kya'],
+    en: `Our course fee is <b>500 PKR per month</b>.<br><br>📚 <b>Full course:</b> 1 month (16 classes)<br>💰 <b>Fee:</b> 500 PKR per month only<br>📱 <b>Payment:</b> Easypaisa to <b>${INSTITUTE.easypaisa}</b><br>💸 <b>Total cost for full course:</b> Just 500 PKR - very affordable!<br><br>After payment, send screenshot on WhatsApp <b>${INSTITUTE.phone}</b> with your child\'s name. We will confirm enrollment and share Google Meet link.<br><br>This is the most affordable AI course for kids in Pakistan!`,
+    ur: `Humara course fee sirf <b>500 PKR per mahina</b> hai.<br><br>📚 <b>Pura course:</b> 1 mahina (16 classes)<br>💰 <b>Fee:</b> 500 PKR per mahina<br>📱 <b>Payment:</b> Easypaisa par <b>${INSTITUTE.easypaisa}</b><br>💸 <b>Kul wasool:</b> Sirf 500 PKR - bohot munasib!<br><br>Payment ke baad WhatsApp <b>${INSTITUTE.phone}</b> par screenshot bhejein apne bachay ke naam ke saath. Hum enrollment confirm karenge aur Google Meet link bhejeinge.<br><br>Yeh Pakistan mein bacchon ke liye sab se munasib AI course hai!`,
     actions: [{ label: '💰 Pay via Easypaisa', action: 'openPayment' }, { label: '✍️ Enroll Now', action: 'scrollEnroll' }]
   },
   {
-    keywords: ['pay', 'payment', 'easypaisa', 'easypaysa', 'easy paisa', 'deposit', 'transfer', 'send money', 'jama', 'adaiigi'],
-    en: `Pay via <b>Easypaisa</b>:<br>📱 Number: <b>${INSTITUTE.easypaisa}</b><br>💰 Amount: <b>500 PKR</b><br>Send screenshot on WhatsApp <b>${INSTITUTE.phone}</b>.`,
-    ur: `Ap Easypaisa se payment karein:<br>📱 Number: <b>${INSTITUTE.easypaisa}</b><br>💰 Amount: <b>500 PKR</b><br>WhatsApp <b>${INSTITUTE.phone}</b> par screenshot bhejein.`,
+    keywords: ['pay', 'payment', 'easypaisa', 'easypaysa', 'easy paisa', 'deposit', 'transfer', 'send money', 'jama', 'adaiigi', 'payment kaise', 'payment kaisay'],
+    en: `Pay 500 PKR via <b>Easypaisa</b> in 7 easy steps:<br><br>📱 <b>Number:</b> ${INSTITUTE.easypaisa}<br>💰 <b>Amount:</b> 500 PKR<br><br><b>Steps:</b><br>1. Open Easypaisa App<br>2. Tap "Send Money"<br>3. Select "Easypaisa Account"<br>4. Enter: 03331250524<br>5. Enter amount: 500<br>6. Enter PIN to confirm<br>7. Take screenshot<br><br>Then send screenshot on WhatsApp <b>${INSTITUTE.phone}</b> with child\'s name.`,
+    ur: `500 PKR <b>Easypaisa</b> se 7 aasani steps mein pay karein:<br><br>📱 <b>Number:</b> ${INSTITUTE.easypaisa}<br>💰 <b>Amount:</b> 500 PKR<br><br><b>Steps:</b><br>1. Easypaisa App kholein<br>2. "Send Money" par tap karein<br>3. "Easypaisa Account" select karein<br>4. Number daalein: 03331250524<br>5. Amount: 500 daalein<br>6. PIN enter karke confirm karein<br>7. Screenshot lein<br><br>Phir WhatsApp <b>${INSTITUTE.phone}</b> par screenshot bhejein bachay ke naam ke saath.`,
     actions: [{ label: '💰 See Payment Steps', action: 'openPayment' }, { label: '💬 WhatsApp', action: 'openWhatsApp' }]
   },
   {
-    keywords: ['schedule', 'time', 'class when', 'class time', 'day', 'days', 'timing', 'kab', 'waqt', 'din', 'klass kab', 'class kab'],
-    en: `Classes held <b>4 days a week</b>:<br>📅 Monday, Wednesday, Saturday, Sunday<br>🕐 Time: <b>${INSTITUTE.classTime}</b><br>⏱️ Duration: <b>${INSTITUTE.classDuration}</b><br>💻 Platform: <b>${INSTITUTE.platform}</b>`,
-    ur: `Classes <b>haftay mein 4 din</b> hoti hain:<br>📅 Peer, Buddh, hafta, Itwaar<br>🕐 Waqt: <b>${INSTITUTE.classTime}</b><br>⏱️ Duration: <b>${INSTITUTE.classDuration}</b><br>💻 Platform: <b>${INSTITUTE.platform}</b>`,
+    keywords: ['schedule', 'time', 'class when', 'class time', 'day', 'days', 'timing', 'kab', 'waqt', 'din', 'klass kab', 'class kab', 'class kab hoti', 'time kya'],
+    en: `Classes held <b>4 days a week</b>:<br><br>📅 <b>Days:</b> Monday, Wednesday, Saturday, Sunday<br>🕐 <b>Time:</b> ${INSTITUTE.classTime}<br>⏱️ <b>Duration:</b> ${INSTITUTE.classDuration} per class<br>💻 <b>Platform:</b> Google Meet (link shared before class)<br>📈 <b>Total:</b> 16 classes in 1 month<br><br>4 classes per week means your child gets regular practice and steady learning progress.`,
+    ur: `Classes <b>haftay mein 4 din</b> hoti hain:<br><br>📅 <b>Din:</b> Peer, Buddh, hafta (Saturday), Itwaar<br>🕐 <b>Waqt:</b> ${INSTITUTE.classTime}<br>⏱️ <b>Duration:</b> ${INSTITUTE.classDuration} har class<br>💻 <b>Platform:</b> Google Meet (link class se pehle bhej di jati hai)<br>📈 <b>Kul:</b> 1 mahine mein 16 classes<br><br>Haftay mein 4 classes se aap ka bacha regular practice karta hai aur tezi se seekhta hai.`,
   },
   {
-    keywords: ['course', 'about', 'what is', 'tell me', 'detail', 'information', 'info', 'kurs', 'kya hai', 'batao', 'toseeh'],
-    en: `<b>AI For Kids</b> course for ages 7-16+.<br><br>📚 Duration: ${INSTITUTE.duration}<br>🎓 Format: ${INSTITUTE.format}<br>📅 ${INSTITUTE.classDays} at ${INSTITUTE.classTime}<br>💻 ${INSTITUTE.platform}<br>💰 Fee: ${INSTITUTE.fee}`,
-    ur: `<b>AI For Kids</b> course 7-16+ saal ke liye.<br><br>📚 Duration: ${INSTITUTE.duration}<br>🎓 Format: ${INSTITUTE.format}<br>📅 ${INSTITUTE.classDays} ko ${INSTITUTE.classTime}<br>💻 ${INSTITUTE.platform}<br>💰 Fee: ${INSTITUTE.fee}`,
+    keywords: ['course', 'about', 'what is', 'tell me', 'detail', 'information', 'info', 'kurs', 'kya hai', 'batao', 'toseeh', 'course kya', 'course batao'],
+    en: `<b>AI For Kids</b> - A complete 1-month AI course for children aged 7 to 16+.<br><br>📚 <b>Duration:</b> ${INSTITUTE.duration} (16 classes)<br>🎓 <b>Format:</b> ${INSTITUTE.format}<br>📅 <b>Schedule:</b> ${INSTITUTE.classDays} at ${INSTITUTE.classTime}<br>💻 <b>Platform:</b> ${INSTITUTE.platform}<br>💰 <b>Fee:</b> ${INSTITUTE.fee}<br>🌐 <b>Language:</b> Urdu + English (bilingual)<br>🏆 <b>Certificate:</b> "Junior AI Creator" on completion<br><br>Students will create: AI images, storybooks, chatbots, posters, music, videos, mobile apps, websites, and more!`,
+    ur: `<b>AI For Kids</b> - 7 se 16+ saal ke bacchon ke liye mukammal 1 mahine ka AI course.<br><br>📚 <b>Duration:</b> ${INSTITUTE.duration} (16 classes)<br>🎓 <b>Format:</b> ${INSTITUTE.format}<br>📅 <b>Schedule:</b> ${INSTITUTE.classDays} ko ${INSTITUTE.classTime}<br>💻 <b>Platform:</b> ${INSTITUTE.platform}<br>💰 <b>Fee:</b> ${INSTITUTE.fee}<br>🌐 <b>Zuban:</b> Urdu + English (do zubani)<br>🏆 <b>Certificate:</b> "Junior AI Creator" course mukammal karne par<br><br>Bacche banayeinge: AI images, storybooks, chatbots, posters, music, videos, mobile apps, websites, aur bohot kuch!`,
     actions: [{ label: '🎓 Syllabus', action: 'showSyllabus' }, { label: '✍️ Enroll', action: 'scrollEnroll' }]
   },
   {
-    keywords: ['learn', 'syllabus', 'curriculum', 'teach', 'topics', 'subject', 'study', 'seekhna', 'sylabus', 'mawduaat'],
-    en: `<b>10 Modules:</b><br><ul>${INSTITUTE.topics.map((t,i) => `<li><b>${i+1}.</b> ${t}</li>`).join('')}</ul>`,
-    ur: `<b>10 Modules:</b><br><ul>${INSTITUTE.topics.map((t,i) => `<li><b>${i+1}.</b> ${t}</li>`).join('')}</ul>`,
-    actions: [{ label: '✍️ Enroll Now', action: 'scrollEnroll' }]
+    keywords: ['learn', 'syllabus', 'curriculum', 'teach', 'topics', 'subject', 'study', 'seekhna', 'sylabus', 'mawduaat', 'kya seekhega', 'kya seekhenge', 'bacha kya'],
+    en: `<b>10 Modules your child will learn:</b><br><ul>${INSTITUTE.topics.map((t,i) => `<li><b>${i+1}.</b> ${t}</li>`).join('')}</ul><br>Every class includes a hands-on project. By course end, your child will have a complete portfolio of 10+ AI projects to show family and friends!`,
+    ur: `<b>10 Modules jo aap ka bacha seekhega:</b><br><ul>${INSTITUTE.topics.map((t,i) => `<li><b>${i+1}.</b> ${t}</li>`).join('')}</ul><br>Har class mein ek practical project hota hai. Course ke baad aap ke bachay ke paas 10+ AI projects ka mukammal portfolio hoga jo wo family aur doston ko dikha sakta hai!`,
+    actions: [{ label: '🖼️ View Gallery', action: 'showGallery' }, { label: '✍️ Enroll Now', action: 'scrollEnroll' }]
   },
   {
-    keywords: ['enroll', 'admission', 'register', 'join', 'sign up', 'apply', 'dakhla', 'register karna', 'shamil'],
-    en: `Great! Let's enroll your child. Fill the form on this page (scroll down) or tap WhatsApp below.`,
-    ur: `Bahut khoob! Chalein ap ke bachay ka enrollment karte hain. Is page par form bharein ya WhatsApp karein.`,
+    keywords: ['website', 'web', 'site', 'website development', 'website banana', 'website kaise', 'web develop', 'site banana', 'website seekhna'],
+    en: `<b>Yes! Students learn website development in this course.</b> 🌐<br><br>Using AI tools like Google Sites and AI copy-writing assistants, students build a complete 3-page website about themselves or a hobby. They learn:<br>• Website structure (header, sections, footer)<br>• Embedding images, videos, and links<br>• Mobile-responsive design<br>• Publishing live on the internet for free<br><br><b>👉 Visit our Gallery page</b> to see real student projects including websites, apps, games, and more!`,
+    ur: `<b>Ji haan! Is course mein bacche website development seekhte hain.</b> 🌐<br><br>Google Sites aur AI tools se bacche apni 3-page website banate hain. Wo seekhte hain:<br>• Website structure (header, sections, footer)<br>• Images, videos, aur links add karna<br>• Mobile-friendly design<br>• Free internet par live publish karna<br><br><b>👉 Hamari Gallery page par jayein</b> taake asli student projects dekh sakein - websites, apps, games, aur bohot kuch!`,
+    actions: [{ label: '🖼️ View Gallery', action: 'showGallery' }, { label: '✍️ Enroll Now', action: 'scrollEnroll' }]
+  },
+  {
+    keywords: ['mobile app', 'app', 'app development', 'mobile banana', 'app banana', 'app kaise', 'mobile app seekhna', 'mit app'],
+    en: `<b>Yes! Students build a real mobile app</b> using MIT App Inventor - no coding required! 📱<br><br>Students learn to:<br>• Build apps with drag-and-drop blocks<br>• Add AI image recognition (point camera at fruit, app says "Apple")<br>• Test the app live on their Android phone<br>• Export and share the APK file<br><br><b>👉 See the Gallery page</b> for screenshots of apps built by our students!`,
+    ur: `<b>Ji haan! Bacche ek asli mobile app banate hain</b> MIT App Inventor se - bina coding ke! 📱<br><br>Bacche seekhte hain:<br>• Drag-and-drop blocks se app banana<br>• AI image recognition add karna (camera fruit par point karein, app bata de "Apple")<br>• Apne Android phone par live test karna<br>• APK file export karke share karna<br><br><b>👉 Gallery page dekhein</b> hamare bacchon ke banaye hue apps ki screenshots ke liye!`,
+    actions: [{ label: '🖼️ View Gallery', action: 'showGallery' }]
+  },
+  {
+    keywords: ['game', 'games', 'game development', 'game banana', 'game kaise', 'game seekhna', 'car game', 'racing'],
+    en: `<b>Yes! Students learn to build games</b> with AI-assisted coding. 🎮<br><br>Projects include:<br>• Car Racing Game (avoid obstacles, track score)<br>• Guess the Number game<br>• Quiz Game with AI-generated questions<br>• Aviator Game (click to avoid clouds)<br><br>Students use AI to write Python code (via ChatGPT) and run it on Google Colab - no installation needed.<br><br><b>👉 See the Gallery page</b> for a screenshot of the Car Racing Game built by our student!`,
+    ur: `<b>Ji haan! Bacche AI se games banana seekhte hain.</b> 🎮<br><br>Projects mein shamil hain:<br>• Car Racing Game (rasta mein rukawatein bypass karein, score track)<br>• Guess the Number game<br>• Quiz Game (AI se banaye sawalat)<br>• Aviator Game (badal se bachne ke liye click karein)<br><br>Bacche ChatGPT se Python code likhwayein aur Google Colab par chalayein - koi install nahi chahiye.<br><br><b>👉 Gallery page dekhein</b> hamare student ke banaye Car Racing Game ki screenshot ke liye!`,
+    actions: [{ label: '🖼️ View Gallery', action: 'showGallery' }]
+  },
+  {
+    keywords: ['image', 'images', 'picture', 'photo', 'image creation', 'tasveer', 'image banana', 'image kaise', 'picture banana'],
+    en: `<b>Yes! Image creation is one of the first things students learn.</b> 🎨<br><br>Using free tools like Bing Image Creator (DALL-E), Leonardo AI, and Canva AI, students:<br>• Generate stunning AI images from text prompts<br>• Learn the 4-part prompt formula<br>• Create art in 5 different styles (cartoon, sketch, watercolor, 3D, cyberpunk)<br>• Build an "AI Art Gallery" with 5 themed images<br><br><b>👉 See the Gallery page</b> for examples of AI images created by our students!`,
+    ur: `<b>Ji haan! Image creation bacchon ki pehli cheezein mein se ek hai jo wo seekhte hain.</b> 🎨<br><br>Bing Image Creator (DALL-E), Leonardo AI, aur Canva AI se bacche:<br>• Text likh kar AI images banate hain<br>• 4-part prompt formula seekhte hain<br>• 5 mukhtalif styles mein art banate hain (cartoon, sketch, watercolor, 3D, cyberpunk)<br>• "AI Art Gallery" banate hain 5 themed images ke saath<br><br><b>👉 Gallery page dekhein</b> hamare bacchon ke banaye AI images ke examples ke liye!`,
+    actions: [{ label: '🖼️ View Gallery', action: 'showGallery' }]
+  },
+  {
+    keywords: ['gallery', 'projects', 'showcase', 'student work', 'portfolio', 'projects dikhao', 'gallery kahan', 'kaam dikhao'],
+    en: `Our students have built amazing projects! 🌟<br><br><b>👉 Visit the Gallery page</b> (click "Gallery" in the top menu) to see:<br>• Noor Kids AI Academy mobile app interface<br>• Car Racing Game (built by student)<br>• Interactive Clock (educational tool)<br>• AI-generated Storybooks<br>• AI Image Creation (Prompt Magic)<br>• Talking Robot Avatar<br><br>Your child can build these too! Enroll today.`,
+    ur: `Hamare bacchon ne amazing projects banaye hain! 🌟<br><br><b>👉 Gallery page par jayein</b> (upar menu mein "Gallery" par click karein) taake dekh sakein:<br>• Noor Kids AI Academy mobile app<br>• Car Racing Game (student ka banaya)<br>• Interactive Clock (educational tool)<br>• AI se banaye Storybooks<br>• AI Image Creation (Prompt Magic)<br>• Talking Robot Avatar<br><br>Aap ka bacha bhi yeh sab bana sakta hai! Aaj hi enroll karein.`,
+    actions: [{ label: '🖼️ Go to Gallery', action: 'showGallery' }, { label: '✍️ Enroll', action: 'scrollEnroll' }]
+  },
+  {
+    keywords: ['enroll', 'admission', 'register', 'join', 'sign up', 'apply', 'dakhla', 'register karna', 'shamil', 'enrollment kaise', 'enroll kaise'],
+    en: `Great! Let\'s enroll your child in 3 easy steps:<br><br>1️⃣ <b>Fill the enrollment form</b> on the Enroll page (parent name, phone, child name)<br>2️⃣ <b>Pay 500 PKR</b> via Easypaisa to ${INSTITUTE.easypaisa}<br>3️⃣ <b>Send payment screenshot</b> on WhatsApp ${INSTITUTE.phone}<br><br>That\'s it! We will confirm your slot and share the Google Meet link for the first class within 24 hours.`,
+    ur: `Bahut khoob! 3 aasani steps mein apne bachay ka enrollment karein:<br><br>1️⃣ <b>Enrollment form bharein</b> Enroll page par (wald ka naam, phone, bachay ka naam)<br>2️⃣ <b>500 PKR pay karein</b> Easypaisa par ${INSTITUTE.easypaisa}<br>3️⃣ <b>Payment screenshot bhejein</b> WhatsApp par ${INSTITUTE.phone}<br><br>Bas! Hum aap ka slot confirm karenge aur pehli class ke liye Google Meet link 24 ghantay mein bhejeinge.`,
     actions: [{ label: '✍️ Open Enrollment Form', action: 'scrollEnroll' }, { label: '💬 WhatsApp', action: 'openWhatsApp' }]
   },
   {
-    keywords: ['contact', 'phone', 'number', 'call', 'whatsapp', 'email', 'reach', 'rabta'],
-    en: `<b>Contact:</b><br>📞 Phone/WhatsApp: <b>${INSTITUTE.phone}</b><br>✉️ Email: <b>${INSTITUTE.email}</b>`,
-    ur: `<b>Rabta:</b><br>📞 Phone/WhatsApp: <b>${INSTITUTE.phone}</b><br>✉️ Email: <b>${INSTITUTE.email}</b>`,
+    keywords: ['contact', 'phone', 'number', 'call', 'whatsapp', 'email', 'reach', 'rabta', 'contact kaise', 'number kya', 'whatsapp number'],
+    en: `<b>Contact Noor Kids AI Academy:</b><br><br>📞 <b>Phone / WhatsApp:</b> ${INSTITUTE.phone}<br>✉️ <b>Email:</b> ${INSTITUTE.email}<br>🌐 <b>Website:</b> noor-kids-ai-academy.github.io<br>📅 <b>Class Schedule:</b> Mon, Wed, Sat, Sun at 8:00 PM<br><br>Tap WhatsApp button below to chat with us directly. We reply within a few hours during daytime.`,
+    ur: `<b>Noor Kids AI Academy se rabta:</b><br><br>📞 <b>Phone / WhatsApp:</b> ${INSTITUTE.phone}<br>✉️ <b>Email:</b> ${INSTITUTE.email}<br>🌐 <b>Website:</b> noor-kids-ai-academy.github.io<br>📅 <b>Class Schedule:</b> Peer, Buddh, hafta, Itwaar ko 8:00 PM<br><br>WhatsApp button niche dabayein direct chat ke liye. Hum din ke waqt mein kuch ghantay mein reply karte hain.`,
     actions: [{ label: '💬 WhatsApp Us', action: 'openWhatsApp' }]
   },
   {
-    keywords: ['whatsapp', 'watsapp', 'whats app', 'message'],
-    en: `WhatsApp us at <b>${INSTITUTE.phone}</b>. Tap below to open.`,
-    ur: `WhatsApp karein <b>${INSTITUTE.phone}</b> par. Niche dabayein.`,
+    keywords: ['whatsapp', 'watsapp', 'whats app', 'message', 'whatsapp kaise', 'whatsapp number'],
+    en: `WhatsApp us at <b>${INSTITUTE.phone}</b>. Tap below to open WhatsApp directly with a pre-filled message.`,
+    ur: `WhatsApp karein <b>${INSTITUTE.phone}</b> par. Niche dabayein direct WhatsApp chat kholne ke liye.`,
     actions: [{ label: '💬 Open WhatsApp', action: 'openWhatsApp' }]
   },
   {
-    keywords: ['requirement', 'laptop', 'computer', 'mobile', 'device', 'pc', 'need', 'zaroorat'],
-    en: `<b>Requirements:</b><br>💻 Laptop/Computer preferred<br>📱 Mobile phone users can also join<br>🌐 Internet connection<br>📧 Gmail account`,
-    ur: `<b>Zarooriyat:</b><br>💻 Laptop/Computer behtar<br>📱 Mobile wale bhi join kar sakte hain<br>🌐 Internet<br>📧 Gmail account`,
+    keywords: ['requirement', 'laptop', 'computer', 'mobile', 'device', 'pc', 'need', 'zaroorat', 'laptop chahiye', 'mobile chahiye', 'kya chahiye'],
+    en: `<b>Requirements for the course:</b><br><br>💻 <b>Laptop or Computer</b> - preferred for best experience<br>📱 <b>Mobile phone</b> - users can also join (supported!)<br>🌐 <b>Stable internet</b> connection<br>📧 <b>Gmail account</b> for Google Meet<br>🎧 <b>Headphones/earphones</b> - recommended for clear audio<br><br>Don\'t worry if you only have a mobile phone - we support both! Many students join from their phones.`,
+    ur: `<b>Course ke liye zarooriyat:</b><br><br>💻 <b>Laptop ya Computer</b> - behtar experience ke liye<br>📱 <b>Mobile phone</b> - wale bhi join kar sakte hain (supported!)<br>🌐 <b>Stable internet</b> connection<br>📧 <b>Gmail account</b> Google Meet ke liye<br>🎧 <b>Headphones/earphones</b> - clear audio ke liye recommend<br><br>Agar sirf mobile hai to bhi koi masla nahi - hum dono support karte hain! Kae bachche phone se join karte hain.`,
   },
   {
-    keywords: ['duration', 'how long', 'month', 'week', 'kitna time', 'kitna lamba', 'kitne din'],
-    en: `Course is <b>1 month</b> with <b>4 classes per week</b> (${INSTITUTE.classDays}). Each class is ${INSTITUTE.classDuration}. Total 16 classes.`,
-    ur: `Course <b>1 mahina</b> ka hai, <b>haftay mein 4 classes</b>. Har class ${INSTITUTE.classDuration}. Kul 16 classes.`,
+    keywords: ['duration', 'how long', 'month', 'week', 'kitna time', 'kitna lamba', 'kitne din', 'kitna mahina', 'course kitna'],
+    en: `<b>Course Duration:</b><br><br>📅 <b>Total:</b> 1 month<br>🗓️ <b>Classes per week:</b> 4 (Mon, Wed, Sat, Sun)<br>⏱️ <b>Each class:</b> ${INSTITUTE.classDuration}<br>📊 <b>Total classes:</b> 16<br>🎓 <b>Format:</b> 90% practical, 10% theory<br><br>The course is designed to be intensive enough for real learning, but short enough to keep kids engaged.`,
+    ur: `<b>Course ki Duration:</b><br><br>📅 <b>Kul:</b> 1 mahina<br>🗓️ <b>Haftay mein classes:</b> 4 (Peer, Buddh, hafta, Itwaar)<br>⏱️ <b>Har class:</b> ${INSTITUTE.classDuration}<br>📊 <b>Kul classes:</b> 16<br>🎓 <b>Format:</b> 90% practical, 10% theory<br><br>Course ko itna intensive rakha gaya hai ke asli learning ho, lekin itna chota ke bacchon ki dilchaspi qaim rahe.`,
   },
   {
-    keywords: ['age', 'kids', 'children', 'student', 'bacha', 'umar', 'bacche'],
-    en: `Course is for <b>kids aged 7 to 16+</b>. We adjust complexity based on age.`,
-    ur: `Course <b>7 se 16+ saal ke bacchon</b> ke liye hai.`,
+    keywords: ['age', 'kids', 'children', 'student', 'bacha', 'umar', 'bacche', 'umar kitni', 'kis umar'],
+    en: `<b>Age Group:</b><br><br>👶 <b>7 to 16+ years</b><br><br>We adjust the complexity based on age:<br>• Ages 7-9: Simpler projects, more visual<br>• Ages 10-12: Standard projects with guidance<br>• Ages 13-15: Advanced projects, more independence<br>• Ages 16+: Full challenge, preparation for tech career<br><br>Both kids with laptops and mobile-only students can join at any age level.`,
+    ur: `<b>Umar:</b><br><br>👶 <b>7 se 16+ saal</b><br><br>Hum umar ke mutabiq complexity adjust karte hain:<br>• 7-9 saal: Aasan projects, zyada visual<br>• 10-12 saal: Standard projects with guidance<br>• 13-15 saal: Advanced projects, zyada freedom<br>• 16+ saal: Full challenge, tech career ki tayari<br><br>Laptop aur mobile wale sab join kar sakte hain har umar mein.`,
   },
   {
-    keywords: ['certificate', 'certification', 'sanad'],
-    en: `Yes! Students get a <b>"Junior AI Creator" certificate</b> on completion.`,
-    ur: `Ji haan! Course mukammal karne wale ko <b>"Junior AI Creator" certificate</b> milega.`,
+    keywords: ['certificate', 'certification', 'sanad', 'certificate milega', 'certificate kya'],
+    en: `<b>Yes! Every student who completes the course receives a certificate.</b> 🏆<br><br>The certificate is titled <b>"Junior AI Creator"</b> and is awarded by Noor Kids AI Academy. It recognizes that the student has:<br>• Completed 16 live classes<br>• Built 10+ AI projects<br>• Presented a final project at the Expo<br><br>The certificate can be shared on social media, added to school portfolios, and used for future tech program applications.`,
+    ur: `<b>Ji haan! Course mukammal karne wale har bachay ko certificate milta hai.</b> 🏆<br><br>Certificate ka title hai <b>"Junior AI Creator"</b> jo Noor Kids AI Academy deti hai. Yeh certify karta hai ke bachay ne:<br>• 16 live classes mukammal ki hain<br>• 10+ AI projects banaye hain<br>• Final project Expo mein present kiya hai<br><br>Certificate social media par share kiya ja sakta hai, school portfolio mein add kiya ja sakta hai, aur aane wale tech programs ke liye use kiya ja sakta hai.`,
   },
   {
-    keywords: ['demo', 'trial', 'free class', 'azmayish'],
-    en: `We offer a <b>free demo class</b>. WhatsApp <b>${INSTITUTE.phone}</b> to book a slot.`,
-    ur: `Hum <b>free demo class</b> dete hain. WhatsApp <b>${INSTITUTE.phone}</b> par slot book karein.`,
-    actions: [{ label: '💬 Book Demo', action: 'openWhatsApp' }]
+    keywords: ['demo', 'trial', 'free class', 'azmayish', 'demo class', 'free class', 'trial class'],
+    en: `<b>Yes! We offer a FREE demo class</b> for new students. 🎁<br><br>The demo class lets you and your child:<br>• Experience our teaching style<br>• See if the course is right fit<br>• Meet the teacher<br>• Ask questions<br><br>To book your free demo, WhatsApp us at <b>${INSTITUTE.phone}</b> with message "Book free demo class". We will share the next available demo slot.`,
+    ur: `<b>Ji haan! Hum naye bacchon ke liye FREE demo class dete hain.</b> 🎁<br><br>Demo class se aap aur aap ka bacha:<br>• Hamari teaching style dekh sakte hain<br>• Course sahi hai ya nahi decide kar sakte hain<br>• Teacher se mil sakte hain<br>• Sawal pooch sakte hain<br><br>Free demo book karne ke liye WhatsApp <b>${INSTITUTE.phone}</b> par "Book free demo class" likh kar bhejein. Hum agla available demo slot bhejeinge.`,
+    actions: [{ label: '💬 Book Demo on WhatsApp', action: 'openWhatsApp' }]
+  },
+  {
+    keywords: ['language', 'urdu', 'english', 'zuban', 'kis zuban', 'language kya', 'urdu mein'],
+    en: `<b>Classes are taught in both Urdu and English (bilingual).</b> 🌐<br><br>This means:<br>• Explanations in Urdu for easy understanding<br>• Technical terms in English (as used in industry)<br>• Course materials in both languages<br>• Students can ask questions in either language<br><br>Every child can understand clearly, regardless of English proficiency.`,
+    ur: `<b>Classes Urdu aur English dono mein hoti hain (do zubani).</b> 🌐<br><br>Iska matlab:<br>• Wazahat Urdu mein taake aasani se samajh aaye<br>• Technical terms English mein (jaise industry mein use hote hain)<br>• Course materials dono zubano mein<br>• Bacche kisi bhi zuban mein sawal pooch sakte hain<br><br>Har bacha clearly samajh sakta hai, chahe English ki proficiency kuch bhi ho.`,
+  },
+  {
+    keywords: ['safe', 'safety', 'secure', 'privacy', 'mehfooz', 'safety', 'safe hai', 'mehfooz hai'],
+    en: `<b>Yes, classes are 100% safe.</b> 🛡️<br><br>• All sessions on Google Meet (secure, encrypted)<br>• Teacher supervises all activities<br>• We teach AI safety and ethics in the course<br>• No inappropriate content - kid-friendly tools only<br>• Parents can join the first class to observe<br>• Class recordings available on request<br><br>Your child\'s safety and privacy are our top priority.`,
+    ur: `<b>Ji haan, classes 100% mehfooz hain.</b> 🛡️<br><br>• Sab sessions Google Meet par (secure, encrypted)<br>• Teacher har activity ki nigrani karta hai<br>• Course mein AI safety aur ethics parhaya jata hai<br>• Koi inappropriate content nahi - sirf kid-friendly tools<br>• Wald pehli class mein observe ke liye join kar sakte hain<br>• Class recordings request par available<br><br>Aap ke bachay ki safety aur privacy hamari sab se badi priority hai.`,
   },
 ];
 
@@ -1709,6 +1752,13 @@ function initVoiceAgent() {
   document.querySelectorAll('.voice-qa-btn').forEach(btn => {
     btn.addEventListener('click', () => {
       voiceText.value = btn.dataset.q;
+      // Quick action buttons respect current language mode
+      // If in UR mode, respond in Urdu; if in EN mode, respond in English
+      // But Urdu quick buttons (in #urduQuickActions) always get Urdu response
+      const isUrduButton = btn.closest('#urduQuickActions');
+      if (isUrduButton) {
+        conversationLang = 'ur';
+      }
       sendVoiceMessage();
     });
   });
@@ -1802,18 +1852,11 @@ function setupSpeechRecognition() {
     } else if (event.error === 'not-allowed') {
       errorMsg = 'Microphone access blocked. Please allow microphone in browser settings (address bar > camera icon > Allow). Or type your question. ⚙️';
     } else if (event.error === 'language-not-supported') {
-      // Fallback to Hindi which often works when Urdu doesn't
-      if (currentInputLang === 'ur-PK') {
-        addVoiceMessage('<i>⚠️ Urdu speech recognition not available on this device. Trying Hindi (similar sounds). Please tap mic again.</i>', 'bot');
-        currentInputLang = 'hi-IN';
-        recognition.lang = 'hi-IN';
-      } else {
-        addVoiceMessage('Speech recognition not supported for this language. Please type your question.', 'bot');
-      }
+      addVoiceMessage('<i>⚠️ اس ڈیوائس پر اردو آواز پہچان دستیاب نہیں ہے۔ براۓ کرم ٹائپ کریں یا Urdu بٹن استعمال کریں۔</i><br><i>Urdu voice recognition not available on this device. Please type or use the Urdu quick buttons below.</i>', 'bot');
     } else if (event.error === 'network') {
       // Urdu/Hindi speech recognition goes to Google servers (not on-device like English)
       // This can fail due to network restrictions, firewalls, or regional blocks
-      if (currentInputLang === 'ur-PK' || currentInputLang === 'hi-IN') {
+      if (currentInputLang === 'ur-PK') {
         addVoiceMessage(
           '<b>⚠️ آواز سے پہچان اس نیٹ ورک پر کام نہیں کر رہی۔</b><br>' +
           '<i>Voice recognition for Urdu/Hindi is not available on your network (Google\'s Urdu speech servers may be blocked).</i><br><br>' +
@@ -1871,72 +1914,181 @@ function detectLanguage(text) {
 
 /* ---------- SPEECH SYNTHESIS (with fixed Urdu voice fallback) ---------- */
 function speak(text, lang) {
-  if (!voiceRepliesOn || !('speechSynthesis' in window)) return;
-  // Strip HTML
+  if (!voiceRepliesOn) return;
+  // Strip HTML tags and clean text
   const cleanText = text.replace(/<[^>]*>/g, ' ').replace(/&[a-z]+;/g, ' ').replace(/\s+/g, ' ').trim();
   if (!cleanText) return;
 
-  // Cancel any ongoing speech
+  // Cancel any ongoing speech (both cloud audio and Web Speech API)
   window.speechSynthesis.cancel();
+  if (window.currentTTSAudio) {
+    try { window.currentTTSAudio.pause(); window.currentTTSAudio.src = ''; } catch(e) {}
+    window.currentTTSAudio = null;
+  }
 
-  // Small delay to ensure cancel completes (Chrome bug workaround)
-  setTimeout(() => {
-    const utter = new SpeechSynthesisUtterance(cleanText);
-    utter.lang = (lang === 'ur') ? 'ur-PK' : 'en-US';
-    utter.rate = 0.9;        // slower for clarity
-    utter.pitch = 1.0;
-    utter.volume = 1.0;
+  if (lang === 'ur') {
+    // Use Google Translate TTS for clear, natural Urdu voice
+    // This provides much better quality than device-installed Hindi/Urdu voices
+    speakUrduCloud(cleanText);
+  } else {
+    // Use Web Speech API for English (works well on all devices)
+    speakEnglishLocal(cleanText);
+  }
+}
 
-    // CRITICAL FIX: Get fresh voices list each time (voices can change)
-    const voices = window.speechSynthesis.getVoices() || [];
-    let chosenVoice = null;
+// ---- Cloud-based Urdu TTS using Google Translate (clear, natural voice) ----
+// Tries multiple TTS endpoints for maximum reliability across different networks
+function speakUrduCloud(text) {
+  const chunks = chunkTextForTTS(text, 190);
+  let chunkIndex = 0;
+  let cloudSuccess = false;
 
-    if (lang === 'ur') {
-      // Priority list for Urdu
-      chosenVoice =
-        voices.find(v => v.lang === 'ur-PK') ||
-        voices.find(v => v.lang === 'ur-IN') ||
-        voices.find(v => v.lang === 'ur') ||
-        voices.find(v => v.lang && v.lang.toLowerCase().startsWith('ur')) ||
-        // Hindi fallback - most reliable since hi-IN is usually installed
-        voices.find(v => v.lang === 'hi-IN') ||
-        voices.find(v => v.lang === 'hi') ||
-        voices.find(v => v.lang && v.lang.toLowerCase().startsWith('hi')) ||
-        // Arabic fallback
-        voices.find(v => v.lang === 'ar-SA') ||
-        voices.find(v => v.lang && v.lang.toLowerCase().startsWith('ar')) ||
-        // Persian fallback
-        voices.find(v => v.lang === 'fa-IR') ||
-        voices.find(v => v.lang && v.lang.toLowerCase().startsWith('fa'));
-    } else {
-      chosenVoice =
-        voices.find(v => v.lang === 'en-US') ||
-        voices.find(v => v.lang === 'en-GB') ||
-        voices.find(v => v.lang && v.lang.toLowerCase().startsWith('en'));
+  // Multiple TTS URL patterns (some work better on certain networks)
+  function getTTSUrl(text, index) {
+    const encoded = encodeURIComponent(text);
+    const urls = [
+      // Primary: Google Translate TTS
+      'https://translate.google.com/translate_tts?ie=UTF-8&q=' + encoded + '&tl=ur&client=tw-ob',
+      // Backup 1: Google Translate with different client param
+      'https://translate.google.com/translate_tts?ie=UTF-8&q=' + encoded + '&tl=ur&total=1&idx=0&textlen=' + text.length + '&client=it',
+      // Backup 2: Google Translate with dict-chrome client
+      'https://translate.google.com/translate_tts?ie=UTF-8&q=' + encoded + '&tl=ur&client=dict-chrome.exe',
+    ];
+    return urls[index] || urls[0];
+  }
+
+  function playNextChunk() {
+    if (chunkIndex >= chunks.length) {
+      window.currentTTSAudio = null;
+      return;
+    }
+    const chunk = chunks[chunkIndex];
+    
+    // Try primary URL first
+    tryPlayUrl(chunk, 0);
+  }
+
+  function tryPlayUrl(text, urlIndex) {
+    if (urlIndex > 2) {
+      // All cloud URLs failed, use local fallback
+      console.warn('All cloud TTS URLs failed, using local TTS');
+      speakUrduLocal(text);
+      chunkIndex++;
+      setTimeout(playNextChunk, 500);
+      return;
     }
 
-    if (chosenVoice) {
-      utter.voice = chosenVoice;
-      console.log('Speaking with voice:', chosenVoice.name, '(' + chosenVoice.lang + ')');
-    } else if (lang === 'ur') {
-      // No Urdu/Hindi/Arabic voice available
-      console.warn('No Urdu/Hindi voice available. Text-only reply.');
-      addVoiceMessage('<i>ℹ️ No Urdu voice on this device. Showing Urdu text only. Install Urdu voice in device settings (Accessibility > Text-to-Speech) for spoken replies.</i>', 'bot');
-      return; // don't speak with English voice for Urdu text
-    }
+    const url = getTTSUrl(text, urlIndex);
+    const audio = new Audio(url);
+    audio.playbackRate = 0.95;
+    window.currentTTSAudio = audio;
 
-    // CRITICAL FIX: Add event listeners for debugging
-    utter.onstart = () => console.log('TTS started');
-    utter.onerror = (e) => console.warn('TTS error:', e.error);
-    utter.onend = () => console.log('TTS ended');
+    audio.onended = function() {
+      cloudSuccess = true;
+      chunkIndex++;
+      setTimeout(playNextChunk, 150);
+    };
 
-    window.speechSynthesis.speak(utter);
+    audio.onerror = function() {
+      console.warn('TTS URL pattern ' + urlIndex + ' failed, trying next...');
+      tryPlayUrl(text, urlIndex + 1);
+    };
 
-    // CRITICAL FIX: Chrome bug - sometimes speech gets stuck. Force resume.
-    setTimeout(() => {
-      if (window.speechSynthesis.paused) {
-        window.speechSynthesis.resume();
+    // Set a timeout - if play doesn't start in 3 seconds, try next URL
+    const timeout = setTimeout(function() {
+      if (!cloudSuccess && audio.readyState < 2) {
+        console.warn('TTS URL pattern ' + urlIndex + ' timed out');
+        tryPlayUrl(text, urlIndex + 1);
       }
+    }, 3000);
+
+    audio.onplaying = function() {
+      clearTimeout(timeout);
+      cloudSuccess = true;
+    };
+
+    audio.play().catch(function(err) {
+      console.warn('TTS play() failed for URL pattern ' + urlIndex + ':', err.message);
+      clearTimeout(timeout);
+      tryPlayUrl(text, urlIndex + 1);
+    });
+  }
+
+  playNextChunk();
+}
+
+// Split text into chunks at sentence boundaries (respects max length)
+function chunkTextForTTS(text, maxLen) {
+  if (text.length <= maxLen) return [text];
+
+  const sentences = text.split(/([.!?؟۔]+)/);
+  const chunks = [];
+  let current = '';
+
+  for (let i = 0; i < sentences.length; i++) {
+    const part = sentences[i] || '';
+    if ((current + part).length <= maxLen) {
+      current += part;
+    } else {
+      if (current.trim()) chunks.push(current.trim());
+      if (part.length > maxLen) {
+        for (let j = 0; j < part.length; j += maxLen) {
+          chunks.push(part.substring(j, j + maxLen).trim());
+        }
+        current = '';
+      } else {
+        current = part;
+      }
+    }
+  }
+  if (current.trim()) chunks.push(current.trim());
+  return chunks.filter(c => c.length > 0);
+}
+
+// Fallback: Web Speech API for Urdu (uses best available device voice)
+function speakUrduLocal(text) {
+  if (!('speechSynthesis' in window)) return;
+  const utter = new SpeechSynthesisUtterance(text);
+  utter.lang = 'ur-PK';
+  utter.rate = 0.82;
+  utter.pitch = 1.0;
+  utter.volume = 1.0;
+
+  const voices = window.speechSynthesis.getVoices() || [];
+  const chosenVoice =
+    voices.find(v => v.lang === 'ur-PK') ||
+    voices.find(v => v.lang === 'ur-IN') ||
+    voices.find(v => v.lang && v.lang.toLowerCase().startsWith('ur')) ||
+    voices.find(v => v.lang === 'hi-IN') ||
+    voices.find(v => v.lang && v.lang.toLowerCase().startsWith('hi'));
+
+  if (chosenVoice) {
+    utter.voice = chosenVoice;
+    console.log('Fallback TTS voice:', chosenVoice.name, chosenVoice.lang);
+  }
+  window.speechSynthesis.speak(utter);
+}
+
+// English TTS via Web Speech API (works well everywhere)
+function speakEnglishLocal(text) {
+  if (!('speechSynthesis' in window)) return;
+  const utter = new SpeechSynthesisUtterance(text);
+  utter.lang = 'en-US';
+  utter.rate = 0.95;
+  utter.pitch = 1.0;
+  utter.volume = 1.0;
+
+  const voices = window.speechSynthesis.getVoices() || [];
+  const chosenVoice =
+    voices.find(v => v.lang === 'en-US') ||
+    voices.find(v => v.lang === 'en-GB') ||
+    voices.find(v => v.lang && v.lang.toLowerCase().startsWith('en'));
+  if (chosenVoice) utter.voice = chosenVoice;
+
+  setTimeout(function() {
+    window.speechSynthesis.speak(utter);
+    setTimeout(function() {
+      if (window.speechSynthesis.paused) window.speechSynthesis.resume();
     }, 200);
   }, 50);
 }
@@ -1975,22 +2127,15 @@ function toggleVoiceReplies() {
 
 function toggleLanguage() {
   warmUpTTS();
+  // Toggle: EN <-> UR only (no Hindi, as user requested)
   const wasEN = (currentInputLang === 'en-US');
-  // Cycle: en-US -> ur-PK -> hi-IN (fallback) -> en-US
   if (wasEN) {
     currentInputLang = 'ur-PK';
     conversationLang = 'ur';
     langLabel.textContent = 'UR';
-    langToggle.title = 'Input: Urdu (اردو). Tap again for Hindi fallback.';
+    langToggle.title = 'Input: Urdu (اردو). Tap for English.';
     langToggle.classList.add('active-urdu');
-  } else if (currentInputLang === 'ur-PK') {
-    // Second tap: switch to Hindi (more reliable on most devices)
-    currentInputLang = 'hi-IN';
-    conversationLang = 'ur'; // still respond in Urdu
-    langLabel.textContent = 'HI';
-    langToggle.title = 'Input: Hindi (fallback for Urdu). Tap for English.';
   } else {
-    // Back to English
     currentInputLang = 'en-US';
     conversationLang = 'en';
     langLabel.textContent = 'EN';
@@ -2012,9 +2157,7 @@ function toggleLanguage() {
   // Confirmation
   let confirmMsg = '';
   if (currentInputLang === 'ur-PK') {
-    confirmMsg = '✅ <b>اردو زبان منتخب ہوگئی ہے۔</b><br>اب مائیک 🎤 پر کلک کریں اور اردو میں بولیں۔<br><br><i>If Urdu mic does not work, tap the UR button again to switch to HI (Hindi) — Hindi understands most Urdu words.</i>';
-  } else if (currentInputLang === 'hi-IN') {
-    confirmMsg = '✅ <b>Hindi mode selected (Urdu compatible).</b><br>Tap the mic 🎤 and speak in Urdu or Hindi. The agent will understand and reply in Urdu text.<br><br><i>Hindi recognition works on most devices and understands Urdu words.</i>';
+    confirmMsg = '✅ <b>اردو زبان منتخب ہوگئی ہے۔</b><br>اب مائیک 🎤 پر کلک کریں اور اردو میں بولیں۔<br>اگر آواز سے پہچان کام نہ کرے تو نیچے دیے گئے Urdu بٹن استعمال کریں یا ٹائپ کریں۔';
   } else {
     confirmMsg = '✅ <b>Input language switched to English.</b><br>Tap the mic 🎤 and speak in English.';
   }
@@ -2029,7 +2172,10 @@ function sendVoiceMessage() {
   addVoiceMessage(text, 'user');
   voiceText.value = '';
   voiceText.style.height = 'auto';
-  conversationLang = detectLanguage(text);
+  // If user is in UR mode, respond in Urdu regardless of input language
+  // (unless they explicitly type Urdu text which would also be Urdu)
+  const detectedLang = detectLanguage(text);
+  conversationLang = (currentInputLang === 'ur-PK') ? 'ur' : detectedLang;
 
   // Typing indicator
   const typing = document.createElement('div');
@@ -2112,6 +2258,9 @@ function handleVoiceAction(action) {
       break;
     case 'scrollEnroll':
       showPage('enroll');
+      break;
+    case 'showGallery':
+      showPage('gallery');
       break;
     case 'showSyllabus':
       const syllabus = KNOWLEDGE.find(k => k.keywords.includes('syllabus'));
